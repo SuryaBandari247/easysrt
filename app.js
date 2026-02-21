@@ -1,5 +1,6 @@
 // Firebase imports
 import { auth, db, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, doc, setDoc, getDoc, updateDoc } from './firebase-config.js';
+import { UsageTracker } from './fingerprint.js';
 
 // App State
 let subtitles = [];
@@ -9,10 +10,9 @@ const FREE_LIMIT = 10;
 const FREE_CONVERSION_LIMIT = 3;
 const FREE_SYNC_LIMIT = 5;
 
-// Track daily usage (reset at midnight)
-let dailyConversions = 0;
-let dailySyncs = 0;
-let lastResetDate = new Date().toDateString();
+// Usage tracker
+const usageTracker = new UsageTracker();
+await usageTracker.init();
 
 // DOM Elements
 const modeBtns = document.querySelectorAll('.mode-btn');
@@ -64,16 +64,6 @@ const editCancel = document.getElementById('editCancel');
 
 let currentEditIndex = null;
 let confirmCallback = null;
-
-// Check and reset daily limits
-function checkDailyReset() {
-    const today = new Date().toDateString();
-    if (lastResetDate !== today) {
-        dailyConversions = 0;
-        dailySyncs = 0;
-        lastResetDate = today;
-    }
-}
 
 // Toast notification function
 function showToast(message, type = 'info') {
@@ -546,9 +536,9 @@ window.paypalOnApprove = async function(data) {
 
 // Format Conversion
 document.getElementById('convertBtn').addEventListener('click', () => {
-    checkDailyReset();
+    const conversionsUsed = usageTracker.getConversionsToday();
     
-    if (!isPro && dailyConversions >= FREE_CONVERSION_LIMIT) {
+    if (!isPro && conversionsUsed >= FREE_CONVERSION_LIMIT) {
         showToast('Daily conversion limit reached! Upgrade to Pro for unlimited conversions.', 'warning');
         return;
     }
@@ -590,9 +580,10 @@ document.getElementById('convertBtn').addEventListener('click', () => {
     URL.revokeObjectURL(url);
     
     if (!isPro) {
-        dailyConversions++;
+        usageTracker.incrementConversions();
+        const newCount = usageTracker.getConversionsToday();
         document.getElementById('conversionUsage').textContent = 
-            `Free: ${dailyConversions}/${FREE_CONVERSION_LIMIT} conversions used today | Pro: Unlimited`;
+            `Free: ${newCount}/${FREE_CONVERSION_LIMIT} conversions used today | Pro: Unlimited`;
     }
     
     showToast(`Converted to ${format.toUpperCase()} successfully!`, 'success');
@@ -642,9 +633,9 @@ function generateSBV() {
 
 // Time Shift
 document.getElementById('shiftBtn').addEventListener('click', () => {
-    checkDailyReset();
+    const syncsUsed = usageTracker.getSyncsToday();
     
-    if (!isPro && dailySyncs >= FREE_SYNC_LIMIT) {
+    if (!isPro && syncsUsed >= FREE_SYNC_LIMIT) {
         showToast('Daily sync limit reached! Upgrade to Pro for unlimited operations.', 'warning');
         return;
     }
@@ -669,9 +660,10 @@ document.getElementById('shiftBtn').addEventListener('click', () => {
     renderSubtitles();
     
     if (!isPro) {
-        dailySyncs++;
+        usageTracker.incrementSyncs();
+        const newCount = usageTracker.getSyncsToday();
         document.getElementById('syncUsage').textContent = 
-            `Free: ${dailySyncs}/${FREE_SYNC_LIMIT} operations used today | Pro: Unlimited`;
+            `Free: ${newCount}/${FREE_SYNC_LIMIT} operations used today | Pro: Unlimited`;
     }
     
     showToast(`Shifted all subtitles by ${shiftSeconds} seconds!`, 'success');
@@ -679,9 +671,9 @@ document.getElementById('shiftBtn').addEventListener('click', () => {
 
 // Speed Adjustment
 document.getElementById('speedBtn').addEventListener('click', () => {
-    checkDailyReset();
+    const syncsUsed = usageTracker.getSyncsToday();
     
-    if (!isPro && dailySyncs >= FREE_SYNC_LIMIT) {
+    if (!isPro && syncsUsed >= FREE_SYNC_LIMIT) {
         showToast('Daily sync limit reached! Upgrade to Pro for unlimited operations.', 'warning');
         return;
     }
@@ -706,9 +698,10 @@ document.getElementById('speedBtn').addEventListener('click', () => {
     renderSubtitles();
     
     if (!isPro) {
-        dailySyncs++;
+        usageTracker.incrementSyncs();
+        const newCount = usageTracker.getSyncsToday();
         document.getElementById('syncUsage').textContent = 
-            `Free: ${dailySyncs}/${FREE_SYNC_LIMIT} operations used today | Pro: Unlimited`;
+            `Free: ${newCount}/${FREE_SYNC_LIMIT} operations used today | Pro: Unlimited`;
     }
     
     showToast(`Adjusted speed by ${multiplier}x!`, 'success');
