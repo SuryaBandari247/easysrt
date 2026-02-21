@@ -249,13 +249,24 @@ function renderSubtitles() {
     subtitleList.innerHTML = '';
     subtitleCount.textContent = subtitles.length;
     
-    // Show tools section if subtitles exist
-    const toolsSection = document.getElementById('toolsSection');
-    if (subtitles.length > 0) {
-        toolsSection.classList.remove('hidden');
+    // Enable/disable tools based on subtitle count
+    const hasSubtitles = subtitles.length > 0;
+    const toolsHint = document.getElementById('toolsHint');
+    
+    // Toggle hint visibility
+    if (hasSubtitles) {
+        toolsHint.classList.add('hidden');
     } else {
-        toolsSection.classList.add('hidden');
+        toolsHint.classList.remove('hidden');
     }
+    
+    // Enable/disable all tool inputs and buttons
+    document.getElementById('outputFormat').disabled = !hasSubtitles;
+    document.getElementById('convertBtn').disabled = !hasSubtitles;
+    document.getElementById('shiftSeconds').disabled = !hasSubtitles;
+    document.getElementById('shiftBtn').disabled = !hasSubtitles;
+    document.getElementById('speedMultiplier').disabled = !hasSubtitles;
+    document.getElementById('speedBtn').disabled = !hasSubtitles;
     
     subtitles.forEach((sub, index) => {
         const item = document.createElement('div');
@@ -619,7 +630,7 @@ document.getElementById('convertBtn').addEventListener('click', () => {
             `Free: ${newCount}/${FREE_CONVERSION_LIMIT} conversions used today | Pro: Unlimited`;
     }
     
-    showToast(`Converted to ${format.toUpperCase()} successfully!`, 'success');
+    showToast(`Converted to ${format.toUpperCase()} and downloaded!`, 'success');
 });
 
 // VTT Format
@@ -700,6 +711,17 @@ document.getElementById('shiftBtn').addEventListener('click', () => {
     }
     
     showToast(`Shifted all subtitles by ${shiftSeconds} seconds!`, 'success');
+    
+    // Scroll to show updated subtitles
+    setTimeout(() => {
+        const editorSection = document.getElementById('editorSection');
+        if (editorSection) {
+            editorSection.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+    }, 300);
 });
 
 // Speed Adjustment
@@ -738,6 +760,17 @@ document.getElementById('speedBtn').addEventListener('click', () => {
     }
     
     showToast(`Adjusted speed by ${multiplier}x!`, 'success');
+    
+    // Scroll to show updated subtitles
+    setTimeout(() => {
+        const editorSection = document.getElementById('editorSection');
+        if (editorSection) {
+            editorSection.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+    }, 300);
 });
 
 // Time manipulation functions
