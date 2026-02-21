@@ -178,41 +178,30 @@ uploadBtn.addEventListener('click', () => {
     fileInput.click();
 });
 
-// When file is selected, show load button and filename
+// When file is selected, load content into textarea
 fileInput.addEventListener('change', () => {
     if (fileInput.files.length > 0) {
-        const filename = fileInput.files[0].name;
-        uploadBtn.textContent = `📂 ${filename}`;
-        loadFileBtn.style.display = 'block';
+        const file = fileInput.files[0];
+        const filename = file.name;
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            pasteInput.value = e.target.result;
+            uploadBtn.textContent = `📂 ${filename}`;
+            showToast(`File loaded! Review and click "Parse & Load"`, 'success');
+        };
+        reader.readAsText(file);
+        
+        // Reset file input and hide load button
+        fileInput.value = '';
+        uploadBtn.textContent = '📂 Choose File';
     }
 });
 
-// Load file
+// Load file button is no longer needed - remove its functionality
 loadFileBtn.addEventListener('click', () => {
-    const file = fileInput.files[0];
-    if (!file) {
-        showToast('Please select a file first!', 'warning');
-        return;
-    }
-    
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        const content = e.target.result;
-        const parsed = parseSRT(content);
-        
-        if (parsed.length === 0) {
-            showToast('Could not parse SRT file.', 'error');
-            return;
-        }
-        
-        subtitles = parsed;
-        renderSubtitles();
-        fileInput.value = '';
-        uploadBtn.textContent = '📂 Choose File';
-        loadFileBtn.style.display = 'none';
-        showToast(`Loaded ${parsed.length} subtitles from file!`, 'success');
-    };
-    reader.readAsText(file);
+    // This button is now hidden, but keeping handler for safety
+    showToast('Please use "Parse & Load" button instead', 'info');
 });
 
 // Parse SRT format
