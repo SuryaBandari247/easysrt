@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://easysrt.vercel.app/sitemap.xml
