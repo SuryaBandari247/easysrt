@@ -90,11 +90,22 @@ header h1 {
     background: white;
 }
 
+/* Main Content Layout */
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 0;
+    min-height: 500px;
+}
+
+.input-section {
+    background: white;
+    border-right: 1px solid #e0e0e0;
+}
+
 .mode-content {
     display: none;
     padding: 60px 10%;
-    max-width: 1400px;
-    margin: 0 auto;
     background: white;
 }
 
@@ -107,6 +118,128 @@ header h1 {
     color: #1a1a1a;
     font-size: 28px;
     font-weight: 700;
+}
+
+/* Tools Sidebar - Always Visible */
+.tools-sidebar {
+    background: #f8f9fa;
+    padding: 40px 24px;
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+}
+
+.tools-sidebar h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.tool-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+}
+
+.tool-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+}
+
+.tool-desc {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 16px;
+}
+
+.format-select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 12px;
+    background: white;
+    cursor: pointer;
+}
+
+.format-select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.tool-input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.tool-input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.input-group span {
+    color: #6b7280;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.tool-btn {
+    width: 100%;
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.tool-btn:hover {
+    background: #5568d3;
+}
+
+.usage-info {
+    margin-top: 12px;
+    padding: 8px;
+    background: #fff3cd;
+    border-radius: 6px;
+    color: #856404;
+    font-size: 12px;
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .input-section {
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .tools-sidebar {
+        max-height: none;
+    }
 }
 
 #pasteInput {
@@ -891,104 +1024,3 @@ header h1 {
 }
 
 
-/* Tools Section */
-.tool-section {
-    margin-bottom: 48px;
-}
-
-.tool-section h3 {
-    font-size: 22px;
-    color: #1a1a1a;
-    margin-bottom: 8px;
-}
-
-.tool-description {
-    color: #6b7280;
-    margin-bottom: 20px;
-    font-size: 15px;
-}
-
-.tool-card {
-    background: #fafafa;
-    padding: 32px;
-    border-radius: 12px;
-    border: 1px solid #e0e0e0;
-}
-
-.tool-card label {
-    display: block;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 12px;
-    font-size: 15px;
-}
-
-.format-select {
-    width: 100%;
-    padding: 14px 16px;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    font-size: 15px;
-    margin-bottom: 20px;
-    background: white;
-    cursor: pointer;
-}
-
-.format-select:focus {
-    outline: none;
-    border-color: #667eea;
-}
-
-.sync-options {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px;
-    margin-bottom: 20px;
-}
-
-.sync-option {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #e0e0e0;
-}
-
-.sync-option label {
-    display: block;
-    margin-bottom: 12px;
-}
-
-.input-group {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-}
-
-.sync-input {
-    flex: 1;
-    padding: 12px 16px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 15px;
-}
-
-.sync-input:focus {
-    outline: none;
-    border-color: #667eea;
-}
-
-.input-group span {
-    color: #6b7280;
-    font-size: 14px;
-}
-
-.usage-info {
-    margin-top: 16px;
-    padding: 12px;
-    background: #fff3cd;
-    border-radius: 8px;
-    color: #856404;
-    font-size: 14px;
-    text-align: center;
-}
