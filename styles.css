@@ -110,66 +110,41 @@ header h1 {
     font-weight: 700;
 }
 
-/* Import Options */
-.import-options {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: 40px;
-    align-items: start;
-}
-
-.import-card {
+/* Import Area */
+.import-area {
     background: #fafafa;
     padding: 32px;
     border-radius: 12px;
     border: 1px solid #e0e0e0;
 }
 
-.import-card h3 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #1a1a1a;
+.import-area textarea {
+    width: 100%;
+    height: 350px;
+    padding: 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    resize: vertical;
+    background: white;
     margin-bottom: 20px;
 }
 
-.import-divider {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 100px;
+.import-area textarea:focus {
+    outline: none;
+    border-color: #667eea;
 }
 
-.import-divider span {
-    background: white;
-    padding: 12px 20px;
-    border-radius: 50%;
-    border: 2px solid #e0e0e0;
-    color: #6b7280;
-    font-weight: 600;
-    font-size: 14px;
-}
-
-.file-upload-area {
+.import-actions {
     display: flex;
-    flex-direction: column;
-    gap: 16px;
-    min-height: 280px;
+    gap: 12px;
     justify-content: center;
 }
 
-@media (max-width: 968px) {
-    .import-options {
-        grid-template-columns: 1fr;
-        gap: 24px;
-    }
-    
-    .import-divider {
-        padding-top: 0;
-    }
-    
-    .import-divider span {
-        border-radius: 8px;
-    }
+.import-actions button {
+    flex: 1;
+    max-width: 250px;
 }
 
 /* Tools Section - Shows after subtitles loaded */

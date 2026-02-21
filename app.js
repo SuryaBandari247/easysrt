@@ -25,6 +25,7 @@ const subtitleTextInput = document.getElementById('subtitleText');
 const addSlotBtn = document.getElementById('addSlotBtn');
 const fileInput = document.getElementById('fileInput');
 const loadFileBtn = document.getElementById('loadFileBtn');
+const uploadBtn = document.getElementById('uploadBtn');
 const subtitleList = document.getElementById('subtitleList');
 const subtitleCount = document.getElementById('subtitleCount');
 const downloadBtn = document.getElementById('downloadBtn');
@@ -172,6 +173,20 @@ addSlotBtn.addEventListener('click', () => {
     showToast('Subtitle added successfully!', 'success');
 });
 
+// Upload button - trigger file input
+uploadBtn.addEventListener('click', () => {
+    fileInput.click();
+});
+
+// When file is selected, show load button and filename
+fileInput.addEventListener('change', () => {
+    if (fileInput.files.length > 0) {
+        const filename = fileInput.files[0].name;
+        uploadBtn.textContent = `📂 ${filename}`;
+        loadFileBtn.style.display = 'block';
+    }
+});
+
 // Load file
 loadFileBtn.addEventListener('click', () => {
     const file = fileInput.files[0];
@@ -193,6 +208,8 @@ loadFileBtn.addEventListener('click', () => {
         subtitles = parsed;
         renderSubtitles();
         fileInput.value = '';
+        uploadBtn.textContent = '📂 Choose File';
+        loadFileBtn.style.display = 'none';
         showToast(`Loaded ${parsed.length} subtitles from file!`, 'success');
     };
     reader.readAsText(file);

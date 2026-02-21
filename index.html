@@ -86,23 +86,14 @@
         <div id="importMode" class="mode-content active">
             <h2>Import Subtitles</h2>
             
-            <div class="import-options">
-                <div class="import-card">
-                    <h3>📋 Paste SRT Content</h3>
-                    <textarea id="pasteInput" placeholder="Paste your SRT content here...&#10;Example:&#10;1&#10;00:00:01,000 --> 00:00:04,000&#10;This is your first line of lyrics.&#10;&#10;2&#10;00:00:04,500 --> 00:00:08,000&#10;This is your second line."></textarea>
-                    <button id="parseBtn" class="action-btn">Parse & Load</button>
-                </div>
+            <div class="import-area">
+                <textarea id="pasteInput" placeholder="Paste your SRT content here or upload a file...&#10;&#10;Example:&#10;1&#10;00:00:01,000 --> 00:00:04,000&#10;This is your first line of lyrics.&#10;&#10;2&#10;00:00:04,500 --> 00:00:08,000&#10;This is your second line."></textarea>
                 
-                <div class="import-divider">
-                    <span>OR</span>
-                </div>
-                
-                <div class="import-card">
-                    <h3>📂 Upload SRT File</h3>
-                    <div class="file-upload-area">
-                        <input type="file" id="fileInput" accept=".srt" class="file-input">
-                        <button id="loadFileBtn" class="action-btn">Load File</button>
-                    </div>
+                <div class="import-actions">
+                    <input type="file" id="fileInput" accept=".srt" style="display: none;">
+                    <button id="parseBtn" class="action-btn">📋 Parse & Load</button>
+                    <button id="uploadBtn" class="secondary-btn">📂 Choose File</button>
+                    <button id="loadFileBtn" class="secondary-btn" style="display: none;">✓ Load Selected File</button>
                 </div>
             </div>
         </div>
