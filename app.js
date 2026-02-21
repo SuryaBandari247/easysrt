@@ -379,7 +379,6 @@ closeAuthModal.addEventListener('click', () => {
 // Upgrade button - require login
 upgradeBtn.addEventListener('click', () => {
     if (!currentUser) {
-        alert('Please login first to upgrade to Pro');
         authModal.classList.remove('hidden');
         return;
     }
@@ -389,7 +388,6 @@ upgradeBtn.addEventListener('click', () => {
 upgradeLinkLimit.addEventListener('click', (e) => {
     e.preventDefault();
     if (!currentUser) {
-        alert('Please login first to upgrade to Pro');
         authModal.classList.remove('hidden');
         return;
     }
@@ -399,7 +397,6 @@ upgradeLinkLimit.addEventListener('click', (e) => {
 // Pro banner and CTA buttons
 proBannerBtn.addEventListener('click', () => {
     if (!currentUser) {
-        alert('Please login or create an account first');
         authModal.classList.remove('hidden');
         return;
     }
@@ -408,7 +405,6 @@ proBannerBtn.addEventListener('click', () => {
 
 proCtaBtn.addEventListener('click', () => {
     if (!currentUser) {
-        alert('Please login or create an account first');
         authModal.classList.remove('hidden');
         return;
     }
