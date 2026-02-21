@@ -81,6 +81,7 @@
             <button class="mode-btn active" data-mode="paste">📋 Paste & Parse</button>
             <button class="mode-btn" data-mode="manual">✏️ Manual Entry</button>
             <button class="mode-btn" data-mode="edit">📂 Open File</button>
+            <button class="mode-btn" data-mode="tools">🔧 Tools</button>
         </div>
 
         <!-- Mode 1: Paste & Parse -->
@@ -109,6 +110,56 @@
             <h2>Open Existing SRT File</h2>
             <input type="file" id="fileInput" accept=".srt" class="file-input">
             <button id="loadFileBtn" class="action-btn">Load File</button>
+        </div>
+
+        <!-- Mode 4: Tools -->
+        <div id="toolsMode" class="mode-content">
+            <h2>Subtitle Tools</h2>
+            
+            <!-- Format Conversion -->
+            <div class="tool-section">
+                <h3>📄 Format Conversion</h3>
+                <p class="tool-description">Convert your subtitles to different formats (SRT, VTT, ASS, SBV)</p>
+                <div class="tool-card">
+                    <label>Select Output Format:</label>
+                    <select id="outputFormat" class="format-select">
+                        <option value="srt">SRT (SubRip)</option>
+                        <option value="vtt">VTT (WebVTT)</option>
+                        <option value="ass">ASS (Advanced SubStation)</option>
+                        <option value="sbv">SBV (YouTube)</option>
+                    </select>
+                    <button id="convertBtn" class="action-btn">Convert & Download</button>
+                    <p class="usage-info" id="conversionUsage">Free: 3 conversions/day | Pro: Unlimited</p>
+                </div>
+            </div>
+
+            <!-- Sync/Shift Tools -->
+            <div class="tool-section">
+                <h3>⏱️ Time Adjustment</h3>
+                <p class="tool-description">Shift or adjust subtitle timing</p>
+                <div class="tool-card">
+                    <div class="sync-options">
+                        <div class="sync-option">
+                            <label>Shift all subtitles by:</label>
+                            <div class="input-group">
+                                <input type="number" id="shiftSeconds" placeholder="0" step="0.1" class="sync-input">
+                                <span>seconds</span>
+                            </div>
+                            <button id="shiftBtn" class="action-btn">Apply Shift</button>
+                        </div>
+                        
+                        <div class="sync-option">
+                            <label>Speed adjustment:</label>
+                            <div class="input-group">
+                                <input type="number" id="speedMultiplier" placeholder="1.0" step="0.1" min="0.5" max="2.0" class="sync-input">
+                                <span>× (0.5 = slower, 2.0 = faster)</span>
+                            </div>
+                            <button id="speedBtn" class="action-btn">Apply Speed</button>
+                        </div>
+                    </div>
+                    <p class="usage-info" id="syncUsage">Free: 5 operations/day | Pro: Unlimited</p>
+                </div>
+            </div>
         </div>
 
         <!-- Editor Section -->

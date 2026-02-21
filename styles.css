@@ -889,3 +889,106 @@ header h1 {
 .close-edit:hover {
     color: #333;
 }
+
+
+/* Tools Section */
+.tool-section {
+    margin-bottom: 48px;
+}
+
+.tool-section h3 {
+    font-size: 22px;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.tool-description {
+    color: #6b7280;
+    margin-bottom: 20px;
+    font-size: 15px;
+}
+
+.tool-card {
+    background: #fafafa;
+    padding: 32px;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+}
+
+.tool-card label {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+    font-size: 15px;
+}
+
+.format-select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 15px;
+    margin-bottom: 20px;
+    background: white;
+    cursor: pointer;
+}
+
+.format-select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.sync-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 20px;
+}
+
+.sync-option {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+.sync-option label {
+    display: block;
+    margin-bottom: 12px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.sync-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.sync-input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.input-group span {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.usage-info {
+    margin-top: 16px;
+    padding: 12px;
+    background: #fff3cd;
+    border-radius: 8px;
+    color: #856404;
+    font-size: 14px;
+    text-align: center;
+}

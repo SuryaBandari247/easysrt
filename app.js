@@ -6,6 +6,13 @@ let subtitles = [];
 let isPro = false;
 let currentUser = null;
 const FREE_LIMIT = 10;
+const FREE_CONVERSION_LIMIT = 3;
+const FREE_SYNC_LIMIT = 5;
+
+// Track daily usage (reset at midnight)
+let dailyConversions = 0;
+let dailySyncs = 0;
+let lastResetDate = new Date().toDateString();
 
 // DOM Elements
 const modeBtns = document.querySelectorAll('.mode-btn');
@@ -57,6 +64,16 @@ const editCancel = document.getElementById('editCancel');
 
 let currentEditIndex = null;
 let confirmCallback = null;
+
+// Check and reset daily limits
+function checkDailyReset() {
+    const today = new Date().toDateString();
+    if (lastResetDate !== today) {
+        dailyConversions = 0;
+        dailySyncs = 0;
+        lastResetDate = today;
+    }
+}
 
 // Toast notification function
 function showToast(message, type = 'info') {
@@ -525,3 +542,210 @@ window.paypalOnApprove = async function(data) {
         }
     }
 };
+
+
+// Format Conversion
+document.getElementById('convertBtn').addEventListener('click', () => {
+    checkDailyReset();
+    
+    if (!isPro && dailyConversions >= FREE_CONVERSION_LIMIT) {
+        showToast('Daily conversion limit reached! Upgrade to Pro for unlimited conversions.', 'warning');
+        return;
+    }
+    
+    if (subtitles.length === 0) {
+        showToast('No subtitles to convert!', 'warning');
+        return;
+    }
+    
+    const format = document.getElementById('outputFormat').value;
+    let content = '';
+    let filename = '';
+    
+    switch(format) {
+        case 'srt':
+            content = generateSRT();
+            filename = 'subtitles.srt';
+            break;
+        case 'vtt':
+            content = generateVTT();
+            filename = 'subtitles.vtt';
+            break;
+        case 'ass':
+            content = generateASS();
+            filename = 'subtitles.ass';
+            break;
+        case 'sbv':
+            content = generateSBV();
+            filename = 'subtitles.sbv';
+            break;
+    }
+    
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+    
+    if (!isPro) {
+        dailyConversions++;
+        document.getElementById('conversionUsage').textContent = 
+            `Free: ${dailyConversions}/${FREE_CONVERSION_LIMIT} conversions used today | Pro: Unlimited`;
+    }
+    
+    showToast(`Converted to ${format.toUpperCase()} successfully!`, 'success');
+});
+
+// VTT Format
+function generateVTT() {
+    let vtt = 'WEBVTT\n\n';
+    subtitles.forEach((sub, index) => {
+        const start = sub.start.replace(',', '.');
+        const end = sub.end.replace(',', '.');
+        vtt += `${index + 1}\n${start} --> ${end}\n${sub.text}\n\n`;
+    });
+    return vtt;
+}
+
+// ASS Format
+function generateASS() {
+    let ass = '[Script Info]\nTitle: Subtitles\nScriptType: v4.00+\n\n';
+    ass += '[V4+ Styles]\nFormat: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding\n';
+    ass += 'Style: Default,Arial,20,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,2,0,2,10,10,10,1\n\n';
+    ass += '[Events]\nFormat: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\n';
+    
+    subtitles.forEach(sub => {
+        const start = convertToASSTime(sub.start);
+        const end = convertToASSTime(sub.end);
+        ass += `Dialogue: 0,${start},${end},Default,,0,0,0,,${sub.text}\n`;
+    });
+    return ass;
+}
+
+function convertToASSTime(time) {
+    // Convert 00:00:01,000 to 0:00:01.00
+    return time.replace(',', '.').substring(0, 10);
+}
+
+// SBV Format (YouTube)
+function generateSBV() {
+    let sbv = '';
+    subtitles.forEach(sub => {
+        const start = sub.start.replace(',', '.');
+        const end = sub.end.replace(',', '.');
+        sbv += `${start},${end}\n${sub.text}\n\n`;
+    });
+    return sbv;
+}
+
+// Time Shift
+document.getElementById('shiftBtn').addEventListener('click', () => {
+    checkDailyReset();
+    
+    if (!isPro && dailySyncs >= FREE_SYNC_LIMIT) {
+        showToast('Daily sync limit reached! Upgrade to Pro for unlimited operations.', 'warning');
+        return;
+    }
+    
+    if (subtitles.length === 0) {
+        showToast('No subtitles to shift!', 'warning');
+        return;
+    }
+    
+    const shiftSeconds = parseFloat(document.getElementById('shiftSeconds').value);
+    if (isNaN(shiftSeconds)) {
+        showToast('Please enter a valid number!', 'warning');
+        return;
+    }
+    
+    subtitles = subtitles.map(sub => ({
+        start: shiftTime(sub.start, shiftSeconds),
+        end: shiftTime(sub.end, shiftSeconds),
+        text: sub.text
+    }));
+    
+    renderSubtitles();
+    
+    if (!isPro) {
+        dailySyncs++;
+        document.getElementById('syncUsage').textContent = 
+            `Free: ${dailySyncs}/${FREE_SYNC_LIMIT} operations used today | Pro: Unlimited`;
+    }
+    
+    showToast(`Shifted all subtitles by ${shiftSeconds} seconds!`, 'success');
+});
+
+// Speed Adjustment
+document.getElementById('speedBtn').addEventListener('click', () => {
+    checkDailyReset();
+    
+    if (!isPro && dailySyncs >= FREE_SYNC_LIMIT) {
+        showToast('Daily sync limit reached! Upgrade to Pro for unlimited operations.', 'warning');
+        return;
+    }
+    
+    if (subtitles.length === 0) {
+        showToast('No subtitles to adjust!', 'warning');
+        return;
+    }
+    
+    const multiplier = parseFloat(document.getElementById('speedMultiplier').value);
+    if (isNaN(multiplier) || multiplier <= 0) {
+        showToast('Please enter a valid multiplier!', 'warning');
+        return;
+    }
+    
+    subtitles = subtitles.map(sub => ({
+        start: multiplyTime(sub.start, multiplier),
+        end: multiplyTime(sub.end, multiplier),
+        text: sub.text
+    }));
+    
+    renderSubtitles();
+    
+    if (!isPro) {
+        dailySyncs++;
+        document.getElementById('syncUsage').textContent = 
+            `Free: ${dailySyncs}/${FREE_SYNC_LIMIT} operations used today | Pro: Unlimited`;
+    }
+    
+    showToast(`Adjusted speed by ${multiplier}x!`, 'success');
+});
+
+// Time manipulation functions
+function shiftTime(timeStr, seconds) {
+    const ms = timeToMs(timeStr);
+    const newMs = Math.max(0, ms + (seconds * 1000));
+    return msToTime(newMs);
+}
+
+function multiplyTime(timeStr, multiplier) {
+    const ms = timeToMs(timeStr);
+    const newMs = ms * multiplier;
+    return msToTime(newMs);
+}
+
+function timeToMs(timeStr) {
+    // 00:00:01,000 -> milliseconds
+    const parts = timeStr.split(':');
+    const hours = parseInt(parts[0]);
+    const minutes = parseInt(parts[1]);
+    const secParts = parts[2].split(',');
+    const seconds = parseInt(secParts[0]);
+    const ms = parseInt(secParts[1]);
+    
+    return (hours * 3600000) + (minutes * 60000) + (seconds * 1000) + ms;
+}
+
+function msToTime(ms) {
+    const hours = Math.floor(ms / 3600000);
+    ms %= 3600000;
+    const minutes = Math.floor(ms / 60000);
+    ms %= 60000;
+    const seconds = Math.floor(ms / 1000);
+    ms %= 1000;
+    
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')},${String(ms).padStart(3, '0')}`;
+}
