@@ -101,10 +101,20 @@
         <div id="manualMode" class="mode-content">
             <h2>Create Subtitles Manually</h2>
             <div class="manual-form">
+                <div class="auto-increment-control">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="autoIncrement" checked>
+                        <span>Auto-increment timestamps</span>
+                    </label>
+                    <div class="duration-input-group">
+                        <input type="number" id="durationSeconds" value="2" step="0.5" min="0.5" class="duration-input">
+                        <span>seconds per subtitle</span>
+                    </div>
+                </div>
                 <div class="form-row">
                     <input type="text" id="startTime" placeholder="00:00:01,000" class="time-input">
                     <span>→</span>
-                    <input type="text" id="endTime" placeholder="00:00:04,000" class="time-input">
+                    <input type="text" id="endTime" placeholder="00:00:03,000" class="time-input">
                 </div>
                 <textarea id="subtitleText" placeholder="Enter subtitle text..."></textarea>
                 <button id="addSlotBtn" class="action-btn">+ Add Subtitle</button>
@@ -126,7 +136,7 @@
         <!-- Tools Section (Always visible) -->
         <div id="toolsSection" class="tools-section">
             <h2>🔧 Subtitle Tools</h2>
-            <p class="tools-hint" id="toolsHint">Import or create subtitles to use these tools</p>
+            <p class="tools-hint" id="toolsHint">Paste, upload, or create subtitles to use these tools</p>
             <div class="tools-grid">
                 <!-- Format Conversion -->
                 <div class="tool-card">
@@ -147,8 +157,8 @@
                 <div class="tool-card">
                     <div class="tool-icon">⏱️</div>
                     <h3>Time Shift</h3>
-                    <p>Move all subtitles forward or backward in time</p>
-                    <div class="tool-example">Example: +2.5 moves subtitles 2.5 seconds later</div>
+                    <p>Move all subtitles forward or backward</p>
+                    <div class="tool-example">+2.5 moves subtitles 2.5s later</div>
                     <div class="input-group">
                         <input type="number" id="shiftSeconds" placeholder="0" step="0.1" class="tool-input" disabled>
                         <span>seconds</span>
@@ -160,14 +170,14 @@
                 <div class="tool-card">
                     <div class="tool-icon">⚡</div>
                     <h3>Video Speed Adjustment</h3>
-                    <p>Re-time subtitles for faster/slower video playback</p>
+                    <p>Re-time for faster/slower playback</p>
                     <div class="tool-example">
-                        <strong>Example:</strong> Video at 2x speed? Use 0.5x<br>
-                        <span class="example-detail">01:00 → 00:30 (timestamps halved)</span>
+                        Video at 2x? Use 0.5x<br>
+                        <span class="example-detail">01:00 → 00:30</span>
                     </div>
                     <div class="input-group">
                         <input type="number" id="speedMultiplier" placeholder="1.0" step="0.1" min="0.5" max="2.0" class="tool-input" disabled>
-                        <span>× multiplier</span>
+                        <span>× speed</span>
                     </div>
                     <button id="speedBtn" class="tool-btn" disabled>Apply Speed</button>
                     <p class="usage-info" id="syncUsage">Free: 5/day | Pro: Unlimited</p>

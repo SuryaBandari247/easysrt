@@ -10,6 +10,11 @@ const FREE_LIMIT = 10;
 const FREE_CONVERSION_LIMIT = 3;
 const FREE_SYNC_LIMIT = 5;
 
+// Auto-increment state
+let autoIncrementEnabled = true;
+let lastEndTime = '00:00:01,000';
+let defaultDuration = 2; // seconds
+
 // Usage tracker
 const usageTracker = new UsageTracker();
 await usageTracker.init();
@@ -63,8 +68,22 @@ const editText = document.getElementById('editText');
 const editSave = document.getElementById('editSave');
 const editCancel = document.getElementById('editCancel');
 
+// Auto-increment elements
+const autoIncrementCheckbox = document.getElementById('autoIncrement');
+const durationInput = document.getElementById('durationSeconds');
+
 let currentEditIndex = null;
 let confirmCallback = null;
+
+// Initialize time inputs with default values
+function initializeTimeInputs() {
+    startTimeInput.value = '00:00:01,000';
+    endTimeInput.value = '00:00:03,000';
+    lastEndTime = '00:00:01,000';
+}
+
+// Call initialization
+initializeTimeInputs();
 
 // Toast notification function
 function showToast(message, type = 'info') {
@@ -127,7 +146,7 @@ modeBtns.forEach(btn => {
 parseBtn.addEventListener('click', () => {
     const text = pasteInput.value.trim();
     if (!text) {
-        showToast('Please paste SRT content first!', 'warning');
+        showToast('Please paste or upload SRT content first!', 'warning');
         return;
     }
     
@@ -178,9 +197,21 @@ addSlotBtn.addEventListener('click', () => {
     });
     
     renderSubtitles();
-    startTimeInput.value = '';
-    endTimeInput.value = '';
+    
+    // Clear text input
     subtitleTextInput.value = '';
+    
+    // Auto-increment timestamps if enabled
+    if (autoIncrementEnabled) {
+        const duration = parseFloat(durationInput.value) || defaultDuration;
+        const nextStart = end;
+        const nextEnd = addSecondsToTime(end, duration);
+        
+        startTimeInput.value = nextStart;
+        endTimeInput.value = nextEnd;
+        lastEndTime = nextStart;
+    }
+    
     showToast('Subtitle added successfully!', 'success');
     
     // Scroll to subtitle list if first subtitle
@@ -194,6 +225,44 @@ addSlotBtn.addEventListener('click', () => {
                 });
             }
         }, 200);
+    }
+});
+
+// Helper function to add seconds to a time string
+function addSecondsToTime(timeStr, seconds) {
+    const ms = timeToMs(timeStr);
+    const newMs = ms + (seconds * 1000);
+    return msToTime(newMs);
+}
+
+// Auto-increment checkbox handler
+autoIncrementCheckbox.addEventListener('change', (e) => {
+    autoIncrementEnabled = e.target.checked;
+    durationInput.disabled = !autoIncrementEnabled;
+});
+
+// Duration input handler
+durationInput.addEventListener('input', (e) => {
+    const value = parseFloat(e.target.value);
+    if (value > 0) {
+        defaultDuration = value;
+    }
+});
+
+// Time input manual change handler - disable auto-increment
+startTimeInput.addEventListener('input', () => {
+    if (autoIncrementEnabled && startTimeInput.value !== lastEndTime) {
+        autoIncrementEnabled = false;
+        autoIncrementCheckbox.checked = false;
+        durationInput.disabled = true;
+    }
+});
+
+endTimeInput.addEventListener('input', () => {
+    if (autoIncrementEnabled) {
+        autoIncrementEnabled = false;
+        autoIncrementCheckbox.checked = false;
+        durationInput.disabled = true;
     }
 });
 
@@ -267,6 +336,8 @@ function renderSubtitles() {
     document.getElementById('shiftBtn').disabled = !hasSubtitles;
     document.getElementById('speedMultiplier').disabled = !hasSubtitles;
     document.getElementById('speedBtn').disabled = !hasSubtitles;
+    document.getElementById('clearAllBtn').disabled = !hasSubtitles;
+    document.getElementById('downloadBtn').disabled = !hasSubtitles;
     
     subtitles.forEach((sub, index) => {
         const item = document.createElement('div');
