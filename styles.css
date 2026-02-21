@@ -59,31 +59,35 @@ header h1 {
 
 .mode-selector {
     display: flex;
-    border-bottom: 2px solid #e0e0e0;
-    background: #f5f5f5;
+    background: white;
+    padding: 0;
+    gap: 0;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .mode-btn {
     flex: 1;
-    padding: 16px;
-    background: transparent;
+    padding: 20px 24px;
+    background: white;
     border: none;
     cursor: pointer;
     font-size: 15px;
     font-weight: 500;
     border-bottom: 3px solid transparent;
     color: #666;
+    position: relative;
 }
 
 .mode-btn:hover {
-    background: #e8e8e8;
+    color: #667eea;
+    background: #fafafa;
 }
 
 .mode-btn.active {
-    background: white;
     color: #667eea;
     border-bottom-color: #667eea;
     font-weight: 600;
+    background: white;
 }
 
 .mode-content {
@@ -91,6 +95,7 @@ header h1 {
     padding: 60px 10%;
     max-width: 1400px;
     margin: 0 auto;
+    background: white;
 }
 
 .mode-content.active {
@@ -98,48 +103,57 @@ header h1 {
 }
 
 .mode-content h2 {
-    margin-bottom: 24px;
-    color: #333;
-    font-size: 24px;
+    margin-bottom: 32px;
+    color: #1a1a1a;
+    font-size: 28px;
     font-weight: 700;
 }
 
 #pasteInput {
     width: 100%;
-    height: 250px;
-    padding: 15px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
+    height: 280px;
+    padding: 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
     font-family: 'Courier New', monospace;
     font-size: 14px;
     resize: vertical;
+    background: #fafafa;
 }
 
 #pasteInput:focus {
     outline: none;
     border-color: #667eea;
+    background: white;
 }
 
 .manual-form {
-    background: #f9f9f9;
-    padding: 25px;
-    border-radius: 8px;
+    background: #fafafa;
+    padding: 32px;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
 }
 
 .form-row {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 15px;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.form-row span {
+    color: #999;
+    font-size: 18px;
 }
 
 .time-input {
     flex: 1;
-    padding: 12px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
+    padding: 14px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
     font-family: 'Courier New', monospace;
     font-size: 14px;
+    background: white;
 }
 
 .time-input:focus {
@@ -149,13 +163,14 @@ header h1 {
 
 #subtitleText {
     width: 100%;
-    height: 100px;
-    padding: 12px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 15px;
+    height: 120px;
+    padding: 14px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    margin-bottom: 20px;
     resize: vertical;
     font-size: 14px;
+    background: white;
 }
 
 #subtitleText:focus {
@@ -167,8 +182,8 @@ header h1 {
     background: #667eea;
     color: white;
     border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
+    padding: 14px 32px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
@@ -179,9 +194,9 @@ header h1 {
 }
 
 .secondary-btn {
-    background: #e0e0e0;
-    color: #333;
-    border: none;
+    background: white;
+    color: #666;
+    border: 2px solid #e0e0e0;
     padding: 10px 20px;
     border-radius: 8px;
     cursor: pointer;
@@ -189,18 +204,26 @@ header h1 {
 }
 
 .secondary-btn:hover {
-    background: #d0d0d0;
+    border-color: #667eea;
+    color: #667eea;
 }
 
 .file-input {
     display: block;
-    margin-bottom: 15px;
-    padding: 10px;
+    margin-bottom: 20px;
+    padding: 16px;
+    border: 2px dashed #e0e0e0;
+    border-radius: 10px;
+    background: #fafafa;
+}
+
+.file-input:hover {
+    border-color: #667eea;
 }
 
 .editor-section {
     padding: 60px 10%;
-    background: #fafafa;
+    background: #f8f9fa;
     max-width: 1400px;
     margin: 0 auto;
 }
@@ -209,35 +232,36 @@ header h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
+    margin-bottom: 32px;
 }
 
 .editor-header h2 {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
-    color: #333;
+    color: #1a1a1a;
 }
 
 .editor-actions {
     display: flex;
-    gap: 10px;
+    gap: 12px;
 }
 
 .subtitle-list {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 16px;
 }
 
 .subtitle-item {
     background: white;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 24px;
 }
 
 .subtitle-item:hover {
     border-color: #667eea;
+    box-shadow: 0 2px 8px rgba(102,126,234,0.1);
 }
 
 .subtitle-header {
@@ -259,7 +283,7 @@ header h1 {
 }
 
 .edit-btn, .delete-btn {
-    padding: 6px 14px;
+    padding: 8px 16px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -268,32 +292,32 @@ header h1 {
 }
 
 .edit-btn {
-    background: #4CAF50;
+    background: #10b981;
     color: white;
 }
 
 .edit-btn:hover {
-    background: #45a049;
+    background: #059669;
 }
 
 .delete-btn {
-    background: #f44336;
+    background: #ef4444;
     color: white;
 }
 
 .delete-btn:hover {
-    background: #da190b;
+    background: #dc2626;
 }
 
 .subtitle-time {
     font-family: 'Courier New', monospace;
-    color: #666;
+    color: #6b7280;
     margin-bottom: 10px;
     font-size: 14px;
 }
 
 .subtitle-text {
-    color: #333;
+    color: #1a1a1a;
     line-height: 1.6;
     font-size: 15px;
 }
@@ -732,4 +756,136 @@ header h1 {
     .pro-features-grid {
         grid-template-columns: 1fr;
     }
+}
+
+
+/* Toast Notification */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #333;
+    color: white;
+    padding: 16px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 10000;
+    font-size: 15px;
+    max-width: 400px;
+    animation: slideIn 0.3s ease-out;
+}
+
+.toast.hidden {
+    display: none;
+}
+
+.toast.success {
+    background: #10b981;
+}
+
+.toast.error {
+    background: #ef4444;
+}
+
+.toast.warning {
+    background: #f59e0b;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+
+/* Confirm Dialog */
+.confirm-dialog {
+    max-width: 400px;
+    text-align: center;
+}
+
+.confirm-dialog h3 {
+    margin-bottom: 16px;
+    color: #333;
+}
+
+.confirm-dialog p {
+    margin-bottom: 24px;
+    color: #666;
+    font-size: 15px;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+/* Edit Dialog */
+.edit-dialog {
+    max-width: 500px;
+}
+
+.edit-dialog h3 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.edit-form label {
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.edit-form input,
+.edit-form textarea {
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.edit-form input:focus,
+.edit-form textarea:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.edit-form textarea {
+    font-family: inherit;
+    resize: vertical;
+}
+
+.edit-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.edit-actions button {
+    flex: 1;
+}
+
+.close-edit {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 30px;
+    cursor: pointer;
+    color: #999;
+}
+
+.close-edit:hover {
+    color: #333;
 }

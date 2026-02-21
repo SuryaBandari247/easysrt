@@ -40,6 +40,64 @@ const authError = document.getElementById('authError');
 const proBanner = document.getElementById('proBanner');
 const proBannerBtn = document.getElementById('proBannerBtn');
 const proCtaBtn = document.getElementById('proCtaBtn');
+const toast = document.getElementById('toast');
+const toastMessage = document.getElementById('toastMessage');
+const confirmDialog = document.getElementById('confirmDialog');
+const confirmTitle = document.getElementById('confirmTitle');
+const confirmMessage = document.getElementById('confirmMessage');
+const confirmOk = document.getElementById('confirmOk');
+const confirmCancel = document.getElementById('confirmCancel');
+const editDialog = document.getElementById('editDialog');
+const closeEditDialog = document.querySelector('.close-edit');
+const editStartTime = document.getElementById('editStartTime');
+const editEndTime = document.getElementById('editEndTime');
+const editText = document.getElementById('editText');
+const editSave = document.getElementById('editSave');
+const editCancel = document.getElementById('editCancel');
+
+let currentEditIndex = null;
+let confirmCallback = null;
+
+// Toast notification function
+function showToast(message, type = 'info') {
+    toastMessage.textContent = message;
+    toast.className = 'toast';
+    if (type === 'success') toast.classList.add('success');
+    if (type === 'error') toast.classList.add('error');
+    if (type === 'warning') toast.classList.add('warning');
+    
+    setTimeout(() => {
+        toast.classList.add('hidden');
+    }, 3000);
+}
+
+// Custom confirm dialog
+function showConfirm(title, message, callback) {
+    confirmTitle.textContent = title;
+    confirmMessage.textContent = message;
+    confirmCallback = callback;
+    confirmDialog.classList.remove('hidden');
+}
+
+confirmOk.addEventListener('click', () => {
+    confirmDialog.classList.add('hidden');
+    if (confirmCallback) confirmCallback(true);
+    confirmCallback = null;
+});
+
+confirmCancel.addEventListener('click', () => {
+    confirmDialog.classList.add('hidden');
+    if (confirmCallback) confirmCallback(false);
+    confirmCallback = null;
+});
+
+window.addEventListener('click', (e) => {
+    if (e.target === confirmDialog) {
+        confirmDialog.classList.add('hidden');
+        if (confirmCallback) confirmCallback(false);
+        confirmCallback = null;
+    }
+});
 
 // Mode Switching
 modeBtns.forEach(btn => {
@@ -58,19 +116,20 @@ modeBtns.forEach(btn => {
 parseBtn.addEventListener('click', () => {
     const text = pasteInput.value.trim();
     if (!text) {
-        alert('Please paste SRT content first!');
+        showToast('Please paste SRT content first!', 'warning');
         return;
     }
     
     const parsed = parseSRT(text);
     if (parsed.length === 0) {
-        alert('Could not parse SRT content. Please check the format.');
+        showToast('Could not parse SRT content. Please check the format.', 'error');
         return;
     }
     
     subtitles = parsed;
     renderSubtitles();
     pasteInput.value = '';
+    showToast(`Loaded ${parsed.length} subtitles successfully!`, 'success');
 });
 
 // Add manual subtitle
@@ -80,12 +139,13 @@ addSlotBtn.addEventListener('click', () => {
     const text = subtitleTextInput.value.trim();
     
     if (!start || !end || !text) {
-        alert('Please fill in all fields!');
+        showToast('Please fill in all fields!', 'warning');
         return;
     }
     
     if (!isPro && subtitles.length >= FREE_LIMIT) {
         showLimitNotice();
+        showToast('Free tier limited to 10 subtitles. Upgrade to Pro!', 'warning');
         return;
     }
     
@@ -99,13 +159,14 @@ addSlotBtn.addEventListener('click', () => {
     startTimeInput.value = '';
     endTimeInput.value = '';
     subtitleTextInput.value = '';
+    showToast('Subtitle added successfully!', 'success');
 });
 
 // Load file
 loadFileBtn.addEventListener('click', () => {
     const file = fileInput.files[0];
     if (!file) {
-        alert('Please select a file first!');
+        showToast('Please select a file first!', 'warning');
         return;
     }
     
@@ -115,13 +176,14 @@ loadFileBtn.addEventListener('click', () => {
         const parsed = parseSRT(content);
         
         if (parsed.length === 0) {
-            alert('Could not parse SRT file.');
+            showToast('Could not parse SRT file.', 'error');
             return;
         }
         
         subtitles = parsed;
         renderSubtitles();
         fileInput.value = '';
+        showToast(`Loaded ${parsed.length} subtitles from file!`, 'success');
     };
     reader.readAsText(file);
 });
@@ -177,33 +239,60 @@ function renderSubtitles() {
 
 // Edit subtitle
 window.editSubtitle = function(index) {
+    currentEditIndex = index;
     const sub = subtitles[index];
-    const newStart = prompt('Start time:', sub.start);
-    const newEnd = prompt('End time:', sub.end);
-    const newText = prompt('Text:', sub.text);
-    
-    if (newStart && newEnd && newText) {
-        subtitles[index] = {
-            start: newStart,
-            end: newEnd,
-            text: newText
+    editStartTime.value = sub.start;
+    editEndTime.value = sub.end;
+    editText.value = sub.text;
+    editDialog.classList.remove('hidden');
+};
+
+editSave.addEventListener('click', () => {
+    if (currentEditIndex !== null) {
+        subtitles[currentEditIndex] = {
+            start: editStartTime.value,
+            end: editEndTime.value,
+            text: editText.value
         };
         renderSubtitles();
+        editDialog.classList.add('hidden');
+        showToast('Subtitle updated!', 'success');
+        currentEditIndex = null;
     }
-};
+});
+
+editCancel.addEventListener('click', () => {
+    editDialog.classList.add('hidden');
+    currentEditIndex = null;
+});
+
+closeEditDialog.addEventListener('click', () => {
+    editDialog.classList.add('hidden');
+    currentEditIndex = null;
+});
+
+window.addEventListener('click', (e) => {
+    if (e.target === editDialog) {
+        editDialog.classList.add('hidden');
+        currentEditIndex = null;
+    }
+});
 
 // Delete subtitle
 window.deleteSubtitle = function(index) {
-    if (confirm('Delete this subtitle?')) {
-        subtitles.splice(index, 1);
-        renderSubtitles();
-    }
+    showConfirm('Delete Subtitle', 'Are you sure you want to delete this subtitle?', (confirmed) => {
+        if (confirmed) {
+            subtitles.splice(index, 1);
+            renderSubtitles();
+            showToast('Subtitle deleted!', 'success');
+        }
+    });
 };
 
 // Download SRT
 downloadBtn.addEventListener('click', () => {
     if (subtitles.length === 0) {
-        alert('No subtitles to download!');
+        showToast('No subtitles to download!', 'warning');
         return;
     }
     
@@ -215,6 +304,7 @@ downloadBtn.addEventListener('click', () => {
     a.download = 'subtitles.srt';
     a.click();
     URL.revokeObjectURL(url);
+    showToast('SRT file downloaded!', 'success');
 });
 
 // Generate SRT content
@@ -226,10 +316,13 @@ function generateSRT() {
 
 // Clear all
 clearAllBtn.addEventListener('click', () => {
-    if (confirm('Clear all subtitles?')) {
-        subtitles = [];
-        renderSubtitles();
-    }
+    showConfirm('Clear All Subtitles', 'Are you sure you want to clear all subtitles? This cannot be undone.', (confirmed) => {
+        if (confirmed) {
+            subtitles = [];
+            renderSubtitles();
+            showToast('All subtitles cleared!', 'success');
+        }
+    });
 });
 
 // Check limit
@@ -421,14 +514,14 @@ window.paypalOnApprove = async function(data) {
                 subscribedAt: new Date().toISOString()
             });
             isPro = true;
-            alert('Thank you for subscribing! You now have Pro access.');
+            showToast('Thank you for subscribing! You now have Pro access.', 'success');
             premiumModal.classList.add('hidden');
             upgradeBtn.classList.add('hidden');
             proBanner.classList.add('hidden');
             limitNotice.classList.add('hidden');
         } catch (error) {
             console.error('Error updating user:', error);
-            alert('Payment successful but there was an error. Please contact support with your subscription ID: ' + data.subscriptionID);
+            showToast('Payment successful but there was an error. Please contact support with your subscription ID: ' + data.subscriptionID, 'error');
         }
     }
 };
