@@ -141,6 +141,17 @@ parseBtn.addEventListener('click', () => {
     renderSubtitles();
     pasteInput.value = '';
     showToast(`Loaded ${parsed.length} subtitles successfully!`, 'success');
+    
+    // Scroll to subtitle list after a brief delay
+    setTimeout(() => {
+        const editorSection = document.getElementById('editorSection');
+        if (editorSection) {
+            editorSection.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+    }, 200);
 });
 
 // Add manual subtitle
@@ -171,6 +182,19 @@ addSlotBtn.addEventListener('click', () => {
     endTimeInput.value = '';
     subtitleTextInput.value = '';
     showToast('Subtitle added successfully!', 'success');
+    
+    // Scroll to subtitle list if first subtitle
+    if (subtitles.length === 1) {
+        setTimeout(() => {
+            const editorSection = document.getElementById('editorSection');
+            if (editorSection) {
+                editorSection.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }
+        }, 200);
+    }
 });
 
 // Upload button - trigger file input
@@ -179,29 +203,21 @@ uploadBtn.addEventListener('click', () => {
 });
 
 // When file is selected, load content into textarea
-fileInput.addEventListener('change', () => {
-    if (fileInput.files.length > 0) {
-        const file = fileInput.files[0];
+fileInput.addEventListener('change', (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+        const file = e.target.files[0];
         const filename = file.name;
         
         const reader = new FileReader();
-        reader.onload = (e) => {
-            pasteInput.value = e.target.result;
-            uploadBtn.textContent = `📂 ${filename}`;
-            showToast(`File loaded! Review and click "Parse & Load"`, 'success');
+        reader.onload = (event) => {
+            pasteInput.value = event.target.result;
+            showToast(`File "${filename}" loaded! Review and click "Parse & Load"`, 'success');
+        };
+        reader.onerror = () => {
+            showToast('Error reading file. Please try again.', 'error');
         };
         reader.readAsText(file);
-        
-        // Reset file input and hide load button
-        fileInput.value = '';
-        uploadBtn.textContent = '📂 Choose File';
     }
-});
-
-// Load file button is no longer needed - remove its functionality
-loadFileBtn.addEventListener('click', () => {
-    // This button is now hidden, but keeping handler for safety
-    showToast('Please use "Parse & Load" button instead', 'info');
 });
 
 // Parse SRT format
