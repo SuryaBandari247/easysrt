@@ -250,6 +250,6 @@ window.addEventListener('click', (e) => {
 
 // Checkout button (integrate with payment processor)
 document.querySelector('.checkout-btn').addEventListener('click', () => {
-    alert('Payment integration: Connect to Stripe, PayPal, or your preferred payment processor here.');
-    // Example: window.location.href = 'https://your-payment-link.com';
+    // Replace with your Stripe payment link
+    window.location.href = 'https://buy.stripe.com/YOUR_PAYMENT_LINK_HERE';
 });
