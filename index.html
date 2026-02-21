@@ -83,51 +83,59 @@
             <button class="mode-btn" data-mode="edit">📂 Open File</button>
         </div>
 
-        <!-- Main Content Area -->
-        <div class="main-content">
-            <!-- Left Side: Input Methods -->
-            <div class="input-section">
-                <!-- Mode 1: Paste & Parse -->
-                <div id="pasteMode" class="mode-content active">
-                    <h2>Paste Your SRT Content</h2>
-                    <textarea id="pasteInput" placeholder="Paste your SRT content here...&#10;Example:&#10;1&#10;00:00:01,000 --> 00:00:04,000&#10;This is your first line of lyrics.&#10;&#10;2&#10;00:00:04,500 --> 00:00:08,000&#10;This is your second line."></textarea>
-                    <button id="parseBtn" class="action-btn">Parse & Load</button>
-                </div>
+        <!-- Mode 1: Paste & Parse -->
+        <div id="pasteMode" class="mode-content active">
+            <h2>Paste Your SRT Content</h2>
+            <textarea id="pasteInput" placeholder="Paste your SRT content here...&#10;Example:&#10;1&#10;00:00:01,000 --> 00:00:04,000&#10;This is your first line of lyrics.&#10;&#10;2&#10;00:00:04,500 --> 00:00:08,000&#10;This is your second line."></textarea>
+            <button id="parseBtn" class="action-btn">Parse & Load</button>
+        </div>
 
-                <!-- Mode 2: Manual Entry -->
-                <div id="manualMode" class="mode-content">
-                    <h2>Create Subtitles Manually</h2>
-                    <div class="manual-form">
-                        <div class="form-row">
-                            <input type="text" id="startTime" placeholder="00:00:01,000" class="time-input">
-                            <span>→</span>
-                            <input type="text" id="endTime" placeholder="00:00:04,000" class="time-input">
-                        </div>
-                        <textarea id="subtitleText" placeholder="Enter subtitle text..."></textarea>
-                        <button id="addSlotBtn" class="action-btn">+ Add Subtitle</button>
-                    </div>
+        <!-- Mode 2: Manual Entry -->
+        <div id="manualMode" class="mode-content">
+            <h2>Create Subtitles Manually</h2>
+            <div class="manual-form">
+                <div class="form-row">
+                    <input type="text" id="startTime" placeholder="00:00:01,000" class="time-input">
+                    <span>→</span>
+                    <input type="text" id="endTime" placeholder="00:00:04,000" class="time-input">
                 </div>
+                <textarea id="subtitleText" placeholder="Enter subtitle text..."></textarea>
+                <button id="addSlotBtn" class="action-btn">+ Add Subtitle</button>
+            </div>
+        </div>
 
-                <!-- Mode 3: Open File -->
-                <div id="editMode" class="mode-content">
-                    <h2>Open Existing SRT File</h2>
-                    <input type="file" id="fileInput" accept=".srt" class="file-input">
-                    <button id="loadFileBtn" class="action-btn">Load File</button>
+        <!-- Mode 3: Open File -->
+        <div id="editMode" class="mode-content">
+            <h2>Open Existing SRT File</h2>
+            <input type="file" id="fileInput" accept=".srt" class="file-input">
+            <button id="loadFileBtn" class="action-btn">Load File</button>
+        </div>
+
+        <!-- Editor Section -->
+        <div id="editorSection" class="editor-section">
+            <div class="editor-header">
+                <h2>Subtitles (<span id="subtitleCount">0</span>)</h2>
+                <div class="editor-actions">
+                    <button id="clearAllBtn" class="secondary-btn">Clear All</button>
+                    <button id="downloadBtn" class="action-btn">💾 Download SRT</button>
                 </div>
             </div>
+            <div id="subtitleList" class="subtitle-list"></div>
+        </div>
 
-            <!-- Right Side: Tools (Always Visible) -->
-            <div class="tools-sidebar">
-                <h2>🔧 Subtitle Tools</h2>
-                
+        <!-- Tools Section (Shows after subtitles loaded) -->
+        <div id="toolsSection" class="tools-section hidden">
+            <h2>🔧 Subtitle Tools</h2>
+            <div class="tools-grid">
                 <!-- Format Conversion -->
                 <div class="tool-card">
-                    <h3>📄 Format Conversion</h3>
-                    <p class="tool-desc">Convert to different formats</p>
+                    <div class="tool-icon">📄</div>
+                    <h3>Format Conversion</h3>
+                    <p>Convert to different formats</p>
                     <select id="outputFormat" class="format-select">
                         <option value="srt">SRT (SubRip)</option>
                         <option value="vtt">VTT (WebVTT)</option>
-                        <option value="ass">ASS (Advanced)</option>
+                        <option value="ass">ASS (Advanced SubStation)</option>
                         <option value="sbv">SBV (YouTube)</option>
                     </select>
                     <button id="convertBtn" class="tool-btn">Convert & Download</button>
@@ -136,8 +144,9 @@
 
                 <!-- Time Shift -->
                 <div class="tool-card">
-                    <h3>⏱️ Time Shift</h3>
-                    <p class="tool-desc">Move all subtitles</p>
+                    <div class="tool-icon">⏱️</div>
+                    <h3>Time Shift</h3>
+                    <p>Move all subtitles forward/backward</p>
                     <div class="input-group">
                         <input type="number" id="shiftSeconds" placeholder="0" step="0.1" class="tool-input">
                         <span>seconds</span>
@@ -147,8 +156,9 @@
 
                 <!-- Speed Adjustment -->
                 <div class="tool-card">
-                    <h3>⚡ Speed Adjust</h3>
-                    <p class="tool-desc">Change timing speed</p>
+                    <div class="tool-icon">⚡</div>
+                    <h3>Speed Adjustment</h3>
+                    <p>Change timing speed (0.5x - 2.0x)</p>
                     <div class="input-group">
                         <input type="number" id="speedMultiplier" placeholder="1.0" step="0.1" min="0.5" max="2.0" class="tool-input">
                         <span>× speed</span>
@@ -158,8 +168,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Editor Section -->
         <div id="editorSection" class="editor-section">
             <div class="editor-header">
                 <h2>Subtitles (<span id="subtitleCount">0</span>)</h2>

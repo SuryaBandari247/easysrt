@@ -91,21 +91,11 @@ header h1 {
 }
 
 /* Main Content Layout */
-.main-content {
-    display: grid;
-    grid-template-columns: 1fr 380px;
-    gap: 0;
-    min-height: 500px;
-}
-
-.input-section {
-    background: white;
-    border-right: 1px solid #e0e0e0;
-}
-
 .mode-content {
     display: none;
     padding: 60px 10%;
+    max-width: 1000px;
+    margin: 0 auto;
     background: white;
 }
 
@@ -120,47 +110,58 @@ header h1 {
     font-weight: 700;
 }
 
-/* Tools Sidebar - Always Visible */
-.tools-sidebar {
-    background: #f8f9fa;
-    padding: 40px 24px;
-    overflow-y: auto;
-    max-height: calc(100vh - 200px);
+/* Tools Section - Shows after subtitles loaded */
+.tools-section {
+    padding: 60px 10%;
+    background: white;
+    border-top: 1px solid #e0e0e0;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-.tools-sidebar h2 {
-    font-size: 20px;
+.tools-section h2 {
+    font-size: 24px;
     font-weight: 700;
     color: #1a1a1a;
-    margin-bottom: 24px;
-    padding-bottom: 16px;
-    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
 }
 
 .tool-card {
-    background: white;
-    padding: 20px;
+    background: #fafafa;
+    padding: 28px;
     border-radius: 12px;
-    margin-bottom: 20px;
     border: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+.tool-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
 }
 
 .tool-card h3 {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
     color: #1a1a1a;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
-.tool-desc {
-    font-size: 13px;
+.tool-card p {
+    font-size: 14px;
     color: #6b7280;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
 }
 
 .format-select {
     width: 100%;
-    padding: 10px 12px;
+    padding: 12px 14px;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
     font-size: 14px;
@@ -176,10 +177,11 @@ header h1 {
 
 .tool-input {
     flex: 1;
-    padding: 10px 12px;
+    padding: 12px 14px;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
     font-size: 14px;
+    background: white;
 }
 
 .tool-input:focus {
@@ -190,7 +192,7 @@ header h1 {
 .input-group {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     margin-bottom: 12px;
 }
 
@@ -205,10 +207,10 @@ header h1 {
     background: #667eea;
     color: white;
     border: none;
-    padding: 10px 16px;
+    padding: 12px 20px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
 }
 
@@ -218,28 +220,11 @@ header h1 {
 
 .usage-info {
     margin-top: 12px;
-    padding: 8px;
+    padding: 10px;
     background: #fff3cd;
     border-radius: 6px;
     color: #856404;
     font-size: 12px;
-    text-align: center;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-    .main-content {
-        grid-template-columns: 1fr;
-    }
-    
-    .input-section {
-        border-right: none;
-        border-bottom: 1px solid #e0e0e0;
-    }
-    
-    .tools-sidebar {
-        max-height: none;
-    }
 }
 
 #pasteInput {

@@ -224,6 +224,14 @@ function renderSubtitles() {
     subtitleList.innerHTML = '';
     subtitleCount.textContent = subtitles.length;
     
+    // Show tools section if subtitles exist
+    const toolsSection = document.getElementById('toolsSection');
+    if (subtitles.length > 0) {
+        toolsSection.classList.remove('hidden');
+    } else {
+        toolsSection.classList.add('hidden');
+    }
+    
     subtitles.forEach((sub, index) => {
         const item = document.createElement('div');
         item.className = 'subtitle-item';
