@@ -80,10 +80,49 @@ function initializeTimeInputs() {
     startTimeInput.value = '00:00:01,000';
     endTimeInput.value = '00:00:03,000';
     lastEndTime = '00:00:01,000';
+    autoIncrementEnabled = true;
+    autoIncrementCheckbox.checked = true;
+    durationInput.disabled = false;
 }
 
 // Call initialization
 initializeTimeInputs();
+
+// LocalStorage functions
+function saveSubtitlesToStorage() {
+    if (currentUser) {
+        // Save to user-specific key
+        localStorage.setItem(`subtitles_${currentUser.uid}`, JSON.stringify(subtitles));
+    } else {
+        // Save to anonymous key
+        localStorage.setItem('subtitles_anonymous', JSON.stringify(subtitles));
+    }
+}
+
+function loadSubtitlesFromStorage() {
+    try {
+        let stored;
+        if (currentUser) {
+            stored = localStorage.getItem(`subtitles_${currentUser.uid}`);
+        } else {
+            stored = localStorage.getItem('subtitles_anonymous');
+        }
+        
+        if (stored) {
+            subtitles = JSON.parse(stored);
+            renderSubtitles();
+            updateTimeInputsFromLastSubtitle();
+            if (subtitles.length > 0) {
+                showToast(`Restored ${subtitles.length} subtitles from last session`, 'success');
+            }
+        }
+    } catch (error) {
+        console.error('Error loading subtitles:', error);
+    }
+}
+
+// Load subtitles on page load
+loadSubtitlesFromStorage();
 
 // Toast notification function
 function showToast(message, type = 'info') {
@@ -163,6 +202,7 @@ parseBtn.addEventListener('click', () => {
     
     subtitles = parsed;
     renderSubtitles();
+    saveSubtitlesToStorage();
     pasteInput.value = '';
     showToast(`Loaded ${parsed.length} subtitles successfully!`, 'success');
     
@@ -205,6 +245,7 @@ addSlotBtn.addEventListener('click', () => {
     });
     
     renderSubtitles();
+    saveSubtitlesToStorage();
     
     // Clear text input
     subtitleTextInput.value = '';
@@ -404,6 +445,7 @@ editSave.addEventListener('click', () => {
             text: editText.value
         };
         renderSubtitles();
+        saveSubtitlesToStorage();
         editDialog.classList.add('hidden');
         showToast('Subtitle updated!', 'success');
         currentEditIndex = null;
@@ -433,6 +475,7 @@ window.deleteSubtitle = function(index) {
         if (confirmed) {
             subtitles.splice(index, 1);
             renderSubtitles();
+            saveSubtitlesToStorage();
             showToast('Subtitle deleted!', 'success');
         }
     });
@@ -469,6 +512,8 @@ clearAllBtn.addEventListener('click', () => {
         if (confirmed) {
             subtitles = [];
             renderSubtitles();
+            saveSubtitlesToStorage();
+            initializeTimeInputs();
             showToast('All subtitles cleared!', 'success');
         }
     });
@@ -547,6 +592,9 @@ onAuthStateChanged(auth, async (user) => {
         logoutBtn.classList.add('hidden');
         upgradeBtn.classList.add('hidden');
         proBanner.classList.remove('hidden');
+        
+        // Load anonymous subtitles
+        loadSubtitlesFromStorage();
     }
     checkLimit();
 });
@@ -611,6 +659,8 @@ logoutBtn.addEventListener('click', async () => {
     await signOut(auth);
     subtitles = [];
     renderSubtitles();
+    saveSubtitlesToStorage();
+    initializeTimeInputs();
 });
 
 // Close auth modal
@@ -800,6 +850,7 @@ document.getElementById('shiftBtn').addEventListener('click', () => {
     }));
     
     renderSubtitles();
+    saveSubtitlesToStorage();
     
     if (!isPro) {
         usageTracker.incrementSyncs();
@@ -849,6 +900,7 @@ document.getElementById('speedBtn').addEventListener('click', () => {
     }));
     
     renderSubtitles();
+    saveSubtitlesToStorage();
     
     if (!isPro) {
         usageTracker.incrementSyncs();
