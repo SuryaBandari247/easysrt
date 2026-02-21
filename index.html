@@ -167,11 +167,33 @@
                         <li>✓ Auto-sync tools</li>
                         <li>✓ Priority support</li>
                     </ul>
-                    <button class="checkout-btn">Get Pro Now</button>
+                    <div id="paypal-button-container-P-8GK70325NY114614SNGNCH2Y"></div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AVOQ7jzJkMtSk0ttbX7Uhk9QZI5y4K_U66cdB2jwn_5eCs0O9LpQF-N5TxqB8lwQw-6hXLGPw_rzTAQn&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+    <script>
+    paypal.Buttons({
+        style: {
+            shape: 'rect',
+            color: 'blue',
+            layout: 'vertical',
+            label: 'subscribe'
+        },
+        createSubscription: function(data, actions) {
+            return actions.subscription.create({
+                plan_id: 'P-8GK70325NY114614SNGNCH2Y'
+            });
+        },
+        onApprove: function(data, actions) {
+            alert('Thank you for subscribing! Subscription ID: ' + data.subscriptionID);
+            // Close modal after successful subscription
+            document.getElementById('premiumModal').classList.add('hidden');
+        }
+    }).render('#paypal-button-container-P-8GK70325NY114614SNGNCH2Y');
+    </script>
 
     <script src="app.js"></script>
 </body>

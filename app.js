@@ -247,9 +247,3 @@ window.addEventListener('click', (e) => {
         premiumModal.classList.add('hidden');
     }
 });
-
-// Checkout button (integrate with payment processor)
-document.querySelector('.checkout-btn').addEventListener('click', () => {
-    // Replace with your Stripe payment link
-    window.location.href = 'https://buy.stripe.com/YOUR_PAYMENT_LINK_HERE';
-});
