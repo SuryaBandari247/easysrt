@@ -139,6 +139,11 @@ modeBtns.forEach(btn => {
         if (modeElement) {
             modeElement.classList.add('active');
         }
+        
+        // Update time inputs when switching to manual mode
+        if (mode === 'manual') {
+            updateTimeInputsFromLastSubtitle();
+        }
     });
 });
 
@@ -160,6 +165,9 @@ parseBtn.addEventListener('click', () => {
     renderSubtitles();
     pasteInput.value = '';
     showToast(`Loaded ${parsed.length} subtitles successfully!`, 'success');
+    
+    // Update manual mode time inputs to continue from last subtitle
+    updateTimeInputsFromLastSubtitle();
     
     // Scroll to subtitle list after a brief delay
     setTimeout(() => {
@@ -235,10 +243,29 @@ function addSecondsToTime(timeStr, seconds) {
     return msToTime(newMs);
 }
 
+// Update time inputs when switching to manual mode or when subtitles exist
+function updateTimeInputsFromLastSubtitle() {
+    if (subtitles.length > 0 && autoIncrementEnabled) {
+        const lastSubtitle = subtitles[subtitles.length - 1];
+        const duration = parseFloat(durationInput.value) || defaultDuration;
+        const nextStart = lastSubtitle.end;
+        const nextEnd = addSecondsToTime(nextStart, duration);
+        
+        startTimeInput.value = nextStart;
+        endTimeInput.value = nextEnd;
+        lastEndTime = nextStart;
+    }
+}
+
 // Auto-increment checkbox handler
 autoIncrementCheckbox.addEventListener('change', (e) => {
     autoIncrementEnabled = e.target.checked;
     durationInput.disabled = !autoIncrementEnabled;
+    
+    // Update time inputs when enabling auto-increment
+    if (autoIncrementEnabled) {
+        updateTimeInputsFromLastSubtitle();
+    }
 });
 
 // Duration input handler
