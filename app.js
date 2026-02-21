@@ -37,6 +37,9 @@ const authForm = document.getElementById('authForm');
 const authTitle = document.getElementById('authTitle');
 const authSubmit = document.getElementById('authSubmit');
 const authError = document.getElementById('authError');
+const proBanner = document.getElementById('proBanner');
+const proBannerBtn = document.getElementById('proBannerBtn');
+const proCtaBtn = document.getElementById('proCtaBtn');
 
 // Mode Switching
 modeBtns.forEach(btn => {
@@ -280,8 +283,10 @@ onAuthStateChanged(auth, async (user) => {
             isPro = userDoc.data().isPro || false;
             if (isPro) {
                 upgradeBtn.classList.add('hidden');
+                proBanner.classList.add('hidden');
             } else {
                 upgradeBtn.classList.remove('hidden');
+                proBanner.classList.remove('hidden');
             }
         } else {
             // Create user document
@@ -290,6 +295,7 @@ onAuthStateChanged(auth, async (user) => {
                 isPro: false,
                 createdAt: new Date().toISOString()
             });
+            proBanner.classList.remove('hidden');
         }
     } else {
         currentUser = null;
@@ -298,6 +304,7 @@ onAuthStateChanged(auth, async (user) => {
         loginBtn.classList.remove('hidden');
         logoutBtn.classList.add('hidden');
         upgradeBtn.classList.add('hidden');
+        proBanner.classList.remove('hidden');
     }
     checkLimit();
 });
@@ -389,6 +396,25 @@ upgradeLinkLimit.addEventListener('click', (e) => {
     premiumModal.classList.remove('hidden');
 });
 
+// Pro banner and CTA buttons
+proBannerBtn.addEventListener('click', () => {
+    if (!currentUser) {
+        alert('Please login or create an account first');
+        authModal.classList.remove('hidden');
+        return;
+    }
+    premiumModal.classList.remove('hidden');
+});
+
+proCtaBtn.addEventListener('click', () => {
+    if (!currentUser) {
+        alert('Please login or create an account first');
+        authModal.classList.remove('hidden');
+        return;
+    }
+    premiumModal.classList.remove('hidden');
+});
+
 // Update PayPal onApprove to mark user as Pro
 window.paypalOnApprove = async function(data) {
     if (currentUser) {
@@ -402,6 +428,7 @@ window.paypalOnApprove = async function(data) {
             alert('Thank you for subscribing! You now have Pro access.');
             premiumModal.classList.add('hidden');
             upgradeBtn.classList.add('hidden');
+            proBanner.classList.add('hidden');
             limitNotice.classList.add('hidden');
         } catch (error) {
             console.error('Error updating user:', error);
