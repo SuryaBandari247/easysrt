@@ -6,80 +6,99 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #f8f9fa;
     min-height: 100vh;
-    padding: 20px;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 100%;
     margin: 0 auto;
     background: white;
-    border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    overflow: hidden;
 }
 
 header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 30px;
+    background: white;
+    color: #1a1a1a;
+    padding: 20px 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 header h1 {
-    font-size: 28px;
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.header-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
 }
 
 .premium-btn {
-    background: rgba(255,255,255,0.2);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    border: 2px solid white;
+    border: none;
     padding: 10px 20px;
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
+    font-size: 14px;
     transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(102,126,234,0.3);
 }
 
 .premium-btn:hover {
-    background: white;
-    color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102,126,234,0.4);
 }
 
 .mode-selector {
     display: flex;
-    border-bottom: 2px solid #e0e0e0;
-    background: #f5f5f5;
+    border-bottom: 1px solid #e5e7eb;
+    background: white;
+    padding: 0 5%;
+    gap: 8px;
 }
 
 .mode-btn {
-    flex: 1;
-    padding: 15px;
+    padding: 16px 24px;
     background: transparent;
     border: none;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
     transition: all 0.3s;
     border-bottom: 3px solid transparent;
+    color: #6b7280;
+    position: relative;
 }
 
 .mode-btn:hover {
-    background: #e8e8e8;
+    color: #667eea;
+    background: #f9fafb;
 }
 
 .mode-btn.active {
-    background: white;
-    border-bottom-color: #667eea;
     color: #667eea;
+    border-bottom-color: #667eea;
+    font-weight: 600;
 }
 
 .mode-content {
     display: none;
-    padding: 30px;
+    padding: 60px 5%;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .mode-content.active {
@@ -87,73 +106,102 @@ header h1 {
 }
 
 .mode-content h2 {
-    margin-bottom: 20px;
-    color: #333;
+    margin-bottom: 24px;
+    color: #1a1a1a;
+    font-size: 28px;
+    font-weight: 700;
 }
 
 #pasteInput {
     width: 100%;
-    height: 200px;
-    padding: 15px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
+    height: 250px;
+    padding: 20px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
     font-family: 'Courier New', monospace;
     font-size: 14px;
     resize: vertical;
+    transition: all 0.3s;
+    background: #f9fafb;
+}
+
+#pasteInput:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
 }
 
 .manual-form {
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
+    background: #f9fafb;
+    padding: 32px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
 }
 
 .form-row {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 15px;
+    gap: 16px;
+    margin-bottom: 20px;
 }
 
 .time-input {
     flex: 1;
-    padding: 12px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
+    padding: 14px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
     font-family: 'Courier New', monospace;
+    font-size: 15px;
+    transition: all 0.3s;
+}
+
+.time-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
 }
 
 #subtitleText {
     width: 100%;
-    height: 80px;
-    padding: 12px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 15px;
+    height: 100px;
+    padding: 14px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    margin-bottom: 20px;
     resize: vertical;
+    font-size: 15px;
+    transition: all 0.3s;
+}
+
+#subtitleText:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
 }
 
 .action-btn {
-    background: #667eea;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
+    padding: 14px 32px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
     transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(102,126,234,0.3);
 }
 
 .action-btn:hover {
-    background: #5568d3;
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102,126,234,0.4);
 }
 
 .secondary-btn {
-    background: #e0e0e0;
-    color: #333;
-    border: none;
+    background: white;
+    color: #6b7280;
+    border: 2px solid #e5e7eb;
     padding: 10px 20px;
     border-radius: 8px;
     cursor: pointer;
@@ -162,56 +210,76 @@ header h1 {
 }
 
 .secondary-btn:hover {
-    background: #d0d0d0;
+    border-color: #667eea;
+    color: #667eea;
 }
 
 .file-input {
     display: block;
-    margin-bottom: 15px;
-    padding: 10px;
+    margin-bottom: 20px;
+    padding: 14px;
+    border: 2px dashed #e5e7eb;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.file-input:hover {
+    border-color: #667eea;
+    background: #f9fafb;
 }
 
 .editor-section {
-    padding: 30px;
-    background: #fafafa;
+    padding: 60px 5%;
+    background: #f9fafb;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .editor-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 32px;
+}
+
+.editor-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
 }
 
 .editor-actions {
     display: flex;
-    gap: 10px;
+    gap: 12px;
 }
 
 .subtitle-list {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 16px;
 }
 
 .subtitle-item {
     background: white;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 15px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
     transition: all 0.3s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .subtitle-item:hover {
     border-color: #667eea;
-    box-shadow: 0 4px 12px rgba(102,126,234,0.1);
+    box-shadow: 0 4px 12px rgba(102,126,234,0.15);
+    transform: translateY(-2px);
 }
 
 .subtitle-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .subtitle-number {
@@ -226,33 +294,47 @@ header h1 {
 }
 
 .edit-btn, .delete-btn {
-    padding: 6px 12px;
+    padding: 8px 16px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     font-size: 14px;
+    font-weight: 500;
     transition: all 0.3s;
 }
 
 .edit-btn {
-    background: #4CAF50;
+    background: #10b981;
     color: white;
 }
 
+.edit-btn:hover {
+    background: #059669;
+    transform: translateY(-1px);
+}
+
 .delete-btn {
-    background: #f44336;
+    background: #ef4444;
     color: white;
+}
+
+.delete-btn:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
 }
 
 .subtitle-time {
     font-family: 'Courier New', monospace;
-    color: #666;
-    margin-bottom: 8px;
+    color: #6b7280;
+    margin-bottom: 12px;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .subtitle-text {
-    color: #333;
-    line-height: 1.5;
+    color: #1a1a1a;
+    line-height: 1.6;
+    font-size: 15px;
 }
 
 .limit-notice {
@@ -284,7 +366,7 @@ header h1 {
 /* Pro Banner */
 .pro-banner {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 20px 30px;
+    padding: 24px 5%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -293,19 +375,20 @@ header h1 {
 .pro-banner-content {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 24px;
     flex-wrap: wrap;
     justify-content: center;
-    max-width: 900px;
+    max-width: 1000px;
 }
 
 .pro-badge {
-    background: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.25);
     color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
+    padding: 10px 20px;
+    border-radius: 24px;
     font-weight: 700;
     font-size: 14px;
+    letter-spacing: 0.5px;
 }
 
 .pro-banner-content p {
@@ -313,24 +396,26 @@ header h1 {
     margin: 0;
     font-size: 16px;
     flex: 1;
-    min-width: 250px;
+    min-width: 300px;
+    font-weight: 500;
 }
 
 .pro-banner-btn {
     background: white;
     color: #667eea;
     border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
+    padding: 12px 28px;
+    border-radius: 10px;
     cursor: pointer;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 15px;
     transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .pro-banner-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
 }
 
 .pro-banner.hidden {
@@ -619,4 +704,76 @@ header h1 {
 
 .close-auth:hover {
     color: #333;
+}
+
+
+/* Improved SEO Content Styling */
+.seo-content h2 {
+    color: #1a1a1a;
+    margin-bottom: 20px;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.seo-content h3 {
+    color: #667eea;
+    margin-top: 40px;
+    margin-bottom: 16px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.seo-content p {
+    color: #4b5563;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.seo-content ul {
+    margin: 20px 0;
+    padding-left: 24px;
+}
+
+.seo-content li {
+    color: #4b5563;
+    line-height: 1.8;
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        padding: 16px 4%;
+    }
+    
+    header h1 {
+        font-size: 20px;
+    }
+    
+    .mode-selector {
+        padding: 0 4%;
+    }
+    
+    .mode-btn {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+    
+    .mode-content {
+        padding: 40px 4%;
+    }
+    
+    .editor-section {
+        padding: 40px 4%;
+    }
+    
+    .seo-content {
+        padding: 60px 4%;
+    }
+    
+    .pro-features-grid {
+        grid-template-columns: 1fr;
+    }
 }
