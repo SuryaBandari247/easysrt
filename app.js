@@ -115,7 +115,10 @@ modeBtns.forEach(btn => {
         modeContents.forEach(c => c.classList.remove('active'));
         
         btn.classList.add('active');
-        document.getElementById(`${mode}Mode`).classList.add('active');
+        const modeElement = document.getElementById(`${mode}Mode`);
+        if (modeElement) {
+            modeElement.classList.add('active');
+        }
     });
 });
 
