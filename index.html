@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRT Editor Pro</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎬 SRT Editor Pro</h1>
+            <div class="header-actions">
+                <button id="upgradeBtn" class="premium-btn">⭐ Upgrade to Pro</button>
+            </div>
+        </header>
+
+        <div class="mode-selector">
+            <button class="mode-btn active" data-mode="paste">📋 Paste & Parse</button>
+            <button class="mode-btn" data-mode="manual">✏️ Manual Entry</button>
+            <button class="mode-btn" data-mode="edit">📂 Open File</button>
+        </div>
+
+        <!-- Mode 1: Paste & Parse -->
+        <div id="pasteMode" class="mode-content active">
+            <h2>Paste Your SRT Content</h2>
+            <textarea id="pasteInput" placeholder="Paste your SRT content here...&#10;Example:&#10;1&#10;00:00:01,000 --> 00:00:04,000&#10;This is your first line of lyrics.&#10;&#10;2&#10;00:00:04,500 --> 00:00:08,000&#10;This is your second line."></textarea>
+            <button id="parseBtn" class="action-btn">Parse & Load</button>
+        </div>
+
+        <!-- Mode 2: Manual Entry -->
+        <div id="manualMode" class="mode-content">
+            <h2>Create Subtitles Manually</h2>
+            <div class="manual-form">
+                <div class="form-row">
+                    <input type="text" id="startTime" placeholder="00:00:01,000" class="time-input">
+                    <span>→</span>
+                    <input type="text" id="endTime" placeholder="00:00:04,000" class="time-input">
+                </div>
+                <textarea id="subtitleText" placeholder="Enter subtitle text..."></textarea>
+                <button id="addSlotBtn" class="action-btn">+ Add Subtitle</button>
+            </div>
+        </div>
+
+        <!-- Mode 3: Open File -->
+        <div id="editMode" class="mode-content">
+            <h2>Open Existing SRT File</h2>
+            <input type="file" id="fileInput" accept=".srt" class="file-input">
+            <button id="loadFileBtn" class="action-btn">Load File</button>
+        </div>
+
+        <!-- Editor Section -->
+        <div id="editorSection" class="editor-section">
+            <div class="editor-header">
+                <h2>Subtitles (<span id="subtitleCount">0</span>)</h2>
+                <div class="editor-actions">
+                    <button id="clearAllBtn" class="secondary-btn">Clear All</button>
+                    <button id="downloadBtn" class="action-btn">💾 Download SRT</button>
+                </div>
+            </div>
+            <div id="subtitleList" class="subtitle-list"></div>
+        </div>
+
+        <!-- Free Tier Limit Notice -->
+        <div id="limitNotice" class="limit-notice hidden">
+            <p>⚠️ Free tier limited to 10 subtitles. <a href="#" id="upgradeLinkLimit">Upgrade to Pro</a> for unlimited subtitles!</p>
+        </div>
+    </div>
+
+    <!-- Premium Modal -->
+    <div id="premiumModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🌟 Upgrade to SRT Editor Pro</h2>
+            <div class="pricing">
+                <div class="price-card">
+                    <h3>Free</h3>
+                    <p class="price">$0</p>
+                    <ul>
+                        <li>✓ Up to 10 subtitles</li>
+                        <li>✓ Basic editing</li>
+                        <li>✗ Batch operations</li>
+                        <li>✗ Auto-sync</li>
+                    </ul>
+                </div>
+                <div class="price-card featured">
+                    <h3>Pro</h3>
+                    <p class="price">$9.99<span>/month</span></p>
+                    <ul>
+                        <li>✓ Unlimited subtitles</li>
+                        <li>✓ Advanced editing</li>
+                        <li>✓ Batch operations</li>
+                        <li>✓ Auto-sync tools</li>
+                        <li>✓ Priority support</li>
+                    </ul>
+                    <button class="checkout-btn">Get Pro Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
