@@ -1,6 +1,10 @@
+// Firebase imports
+import { auth, db, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, doc, setDoc, getDoc, updateDoc } from './firebase-config.js';
+
 // App State
 let subtitles = [];
 let isPro = false;
+let currentUser = null;
 const FREE_LIMIT = 10;
 
 // DOM Elements
@@ -23,6 +27,16 @@ const upgradeBtn = document.getElementById('upgradeBtn');
 const upgradeLinkLimit = document.getElementById('upgradeLinkLimit');
 const premiumModal = document.getElementById('premiumModal');
 const closeModal = document.querySelector('.close');
+const loginBtn = document.getElementById('loginBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+const userEmail = document.getElementById('userEmail');
+const authModal = document.getElementById('authModal');
+const closeAuthModal = document.querySelector('.close-auth');
+const authTabs = document.querySelectorAll('.auth-tab');
+const authForm = document.getElementById('authForm');
+const authTitle = document.getElementById('authTitle');
+const authSubmit = document.getElementById('authSubmit');
+const authError = document.getElementById('authError');
 
 // Mode Switching
 modeBtns.forEach(btn => {
@@ -247,3 +261,151 @@ window.addEventListener('click', (e) => {
         premiumModal.classList.add('hidden');
     }
 });
+
+
+// Authentication
+let currentAuthMode = 'login';
+
+// Auth state observer
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        currentUser = user;
+        userEmail.textContent = user.email;
+        loginBtn.classList.add('hidden');
+        logoutBtn.classList.remove('hidden');
+        
+        // Check if user is Pro
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        if (userDoc.exists()) {
+            isPro = userDoc.data().isPro || false;
+            if (isPro) {
+                upgradeBtn.classList.add('hidden');
+            } else {
+                upgradeBtn.classList.remove('hidden');
+            }
+        } else {
+            // Create user document
+            await setDoc(doc(db, 'users', user.uid), {
+                email: user.email,
+                isPro: false,
+                createdAt: new Date().toISOString()
+            });
+        }
+    } else {
+        currentUser = null;
+        isPro = false;
+        userEmail.textContent = '';
+        loginBtn.classList.remove('hidden');
+        logoutBtn.classList.add('hidden');
+        upgradeBtn.classList.add('hidden');
+    }
+    checkLimit();
+});
+
+// Auth tabs
+authTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        authTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentAuthMode = tab.dataset.tab;
+        
+        if (currentAuthMode === 'login') {
+            authTitle.textContent = 'Login to SRT Editor Pro';
+            authSubmit.textContent = 'Login';
+        } else {
+            authTitle.textContent = 'Create Account';
+            authSubmit.textContent = 'Sign Up';
+        }
+        authError.classList.add('hidden');
+    });
+});
+
+// Auth form submit
+authForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('authEmail').value;
+    const password = document.getElementById('authPassword').value;
+    
+    authError.classList.add('hidden');
+    authSubmit.disabled = true;
+    authSubmit.textContent = 'Please wait...';
+    
+    try {
+        if (currentAuthMode === 'signup') {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            await setDoc(doc(db, 'users', userCredential.user.uid), {
+                email: email,
+                isPro: false,
+                createdAt: new Date().toISOString()
+            });
+        } else {
+            await signInWithEmailAndPassword(auth, email, password);
+        }
+        authModal.classList.add('hidden');
+        authForm.reset();
+    } catch (error) {
+        authError.textContent = error.message;
+        authError.classList.remove('hidden');
+    } finally {
+        authSubmit.disabled = false;
+        authSubmit.textContent = currentAuthMode === 'login' ? 'Login' : 'Sign Up';
+    }
+});
+
+// Login button
+loginBtn.addEventListener('click', () => {
+    authModal.classList.remove('hidden');
+});
+
+// Logout button
+logoutBtn.addEventListener('click', async () => {
+    await signOut(auth);
+    subtitles = [];
+    renderSubtitles();
+});
+
+// Close auth modal
+closeAuthModal.addEventListener('click', () => {
+    authModal.classList.add('hidden');
+});
+
+// Upgrade button - require login
+upgradeBtn.addEventListener('click', () => {
+    if (!currentUser) {
+        alert('Please login first to upgrade to Pro');
+        authModal.classList.remove('hidden');
+        return;
+    }
+    premiumModal.classList.remove('hidden');
+});
+
+upgradeLinkLimit.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (!currentUser) {
+        alert('Please login first to upgrade to Pro');
+        authModal.classList.remove('hidden');
+        return;
+    }
+    premiumModal.classList.remove('hidden');
+});
+
+// Update PayPal onApprove to mark user as Pro
+window.paypalOnApprove = async function(data) {
+    if (currentUser) {
+        try {
+            await updateDoc(doc(db, 'users', currentUser.uid), {
+                isPro: true,
+                subscriptionId: data.subscriptionID,
+                subscribedAt: new Date().toISOString()
+            });
+            isPro = true;
+            alert('Thank you for subscribing! You now have Pro access.');
+            premiumModal.classList.add('hidden');
+            upgradeBtn.classList.add('hidden');
+            limitNotice.classList.add('hidden');
+        } catch (error) {
+            console.error('Error updating user:', error);
+            alert('Payment successful but there was an error. Please contact support with your subscription ID: ' + data.subscriptionID);
+        }
+    }
+};

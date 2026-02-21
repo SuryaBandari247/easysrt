@@ -420,3 +420,83 @@ header h1 {
         transform: none;
     }
 }
+
+
+/* Auth Modal */
+.auth-modal {
+    max-width: 400px;
+}
+
+.user-email {
+    color: white;
+    margin-right: 15px;
+    font-size: 14px;
+}
+
+.auth-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 10px;
+    background: #f0f0f0;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.auth-tab.active {
+    background: #667eea;
+    color: white;
+}
+
+#authForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#authForm input {
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+#authForm input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.auth-error {
+    background: #fee;
+    color: #c33;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.auth-note {
+    margin-top: 15px;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+}
+
+.close-auth {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 30px;
+    cursor: pointer;
+    color: #999;
+}
+
+.close-auth:hover {
+    color: #333;
+}
