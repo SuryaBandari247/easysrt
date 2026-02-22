@@ -717,42 +717,6 @@ header h1 {
     display: none;
 }
 
-/* Features Highlight */
-.features-highlight {
-    background: white;
-    padding: 20px 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-    flex-wrap: wrap;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.feature-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #4b5563;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.feature-icon-small {
-    font-size: 18px;
-}
-
-@media (max-width: 768px) {
-    .features-highlight {
-        gap: 15px;
-        padding: 15px 20px;
-    }
-    
-    .feature-item {
-        font-size: 13px;
-    }
-}
-
 /* Pro Features Section */
 .pro-features-section {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
