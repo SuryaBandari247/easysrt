@@ -29,6 +29,15 @@
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎬</text></svg>">
     
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8351430872646121"
+     crossorigin="anonymous"></script>
+    
     <link rel="stylesheet" href="styles.css">
     
     <!-- Structured Data -->
@@ -62,12 +71,31 @@
 <body>
     <div class="container">
         <header>
-            <h1>🎬 WithSwag SRT Editor</h1>
-            <div class="header-actions">
-                <span id="userEmail" class="user-email"></span>
-                <button id="upgradeBtn" class="premium-btn hidden">⭐ Upgrade to Pro</button>
-                <button id="loginBtn" class="premium-btn">Login</button>
-                <button id="logoutBtn" class="premium-btn hidden">Logout</button>
+            <div class="header-content">
+                <div class="header-title">
+                    <h1>🎬 WithSwag SRT Editor</h1>
+                    <p class="header-tagline">Create, edit, and convert subtitle files online - Free* & Easy</p>
+                </div>
+                <div class="header-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">4</span>
+                        <span class="stat-label">Formats</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Online</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">⚡</span>
+                        <span class="stat-label">Instant</span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <span id="userEmail" class="user-email"></span>
+                    <button id="upgradeBtn" class="premium-btn hidden">⭐ Upgrade to Pro</button>
+                    <button id="loginBtn" class="premium-btn">Login</button>
+                    <button id="logoutBtn" class="premium-btn hidden">Logout</button>
+                </div>
             </div>
         </header>
 
@@ -78,6 +106,12 @@
                 <p>Upgrade to Pro for unlimited subtitles and advanced features - Only €9.99/month</p>
                 <button id="proBannerBtn" class="pro-banner-btn">Upgrade Now</button>
             </div>
+        </div>
+
+        <!-- Ad Slot 1: Below Pro Banner -->
+        <div id="adSlot1" class="ad-container">
+            <!-- Google AdSense code will go here after approval -->
+            <div class="ad-placeholder">Advertisement</div>
         </div>
 
         <!-- Features Highlight -->
@@ -160,6 +194,12 @@
             <div id="subtitleList" class="subtitle-list"></div>
         </div>
 
+        <!-- Ad Slot 2: Before Tools Section -->
+        <div id="adSlot2" class="ad-container">
+            <!-- Google AdSense code will go here after approval -->
+            <div class="ad-placeholder">Advertisement</div>
+        </div>
+
         <!-- Tools Section (Always visible) -->
         <div id="toolsSection" class="tools-section">
             <h2>🔧 Subtitle Tools</h2>
@@ -212,10 +252,28 @@
             </div>
         </div>
 
+        <!-- Ad Slot 3: Before SEO Content -->
+        <div id="adSlot3" class="ad-container">
+            <!-- Google AdSense code will go here after approval -->
+            <div class="ad-placeholder">Advertisement</div>
+        </div>
+
         <!-- SEO Content Section -->
         <div class="seo-content">
             <h2>Free Online Subtitle Editor - All Formats Supported</h2>
             <p>Create and edit subtitle files in all popular formats with WithSwag's free online tool. Whether you're working on SRT, VTT, ASS, or SBV subtitles for YouTube, movies, or any video content, our subtitle editor makes the process simple and fast.</p>
+            
+            <div class="free-tier-notice">
+                <h3>📋 Free Tier Limits</h3>
+                <p><strong>*Free users get:</strong></p>
+                <ul>
+                    <li>Up to 10 subtitles per project</li>
+                    <li>3 format conversions per day</li>
+                    <li>5 time adjustment operations per day</li>
+                    <li>All basic editing features</li>
+                </ul>
+                <p><strong>Upgrade to Pro for unlimited access to all features!</strong></p>
+            </div>
             
             <h3>Supported Subtitle Formats</h3>
             <ul>
@@ -232,6 +290,12 @@
                 <li><strong>Edit Existing Files:</strong> Upload your subtitle file (.srt, .vtt, .ass, .sbv) and make quick edits to timing or text.</li>
             </ul>
             
+            <!-- Ad Slot 4: Mid-content -->
+            <div id="adSlot4" class="ad-container ad-in-content">
+                <!-- Google AdSense code will go here after approval -->
+                <div class="ad-placeholder">Advertisement</div>
+            </div>
+
             <h3>Why Use Our Subtitle Editor?</h3>
             <ul>
                 <li>✓ No installation required - works in your browser</li>

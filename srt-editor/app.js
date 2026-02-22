@@ -571,9 +571,11 @@ onAuthStateChanged(auth, async (user) => {
             if (isPro) {
                 upgradeBtn.classList.add('hidden');
                 proBanner.classList.add('hidden');
+                document.body.classList.add('pro-user'); // Hide ads for Pro users
             } else {
                 upgradeBtn.classList.remove('hidden');
                 proBanner.classList.remove('hidden');
+                document.body.classList.remove('pro-user');
             }
         } else {
             // Create user document
@@ -583,6 +585,7 @@ onAuthStateChanged(auth, async (user) => {
                 createdAt: new Date().toISOString()
             });
             proBanner.classList.remove('hidden');
+            document.body.classList.remove('pro-user');
         }
     } else {
         currentUser = null;
@@ -592,6 +595,7 @@ onAuthStateChanged(auth, async (user) => {
         logoutBtn.classList.add('hidden');
         upgradeBtn.classList.add('hidden');
         proBanner.classList.remove('hidden');
+        document.body.classList.remove('pro-user');
         
         // Load anonymous subtitles
         loadSubtitlesFromStorage();
@@ -713,6 +717,7 @@ window.paypalOnApprove = async function(data) {
                 subscribedAt: new Date().toISOString()
             });
             isPro = true;
+            document.body.classList.add('pro-user'); // Hide ads for Pro users
             showToast('Thank you for subscribing! You now have Pro access.', 'success');
             premiumModal.classList.add('hidden');
             upgradeBtn.classList.add('hidden');
