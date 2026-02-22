@@ -2,7 +2,7 @@
   "redirects": [
     {
       "source": "/portrait/:path*",
-      "destination": "https://easyportrait.vercel.app/:path*",
+      "destination": "https://easy-portrait.vercel.app/:path*",
       "permanent": false
     }
   ]
