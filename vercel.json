@@ -1,12 +1,14 @@
 {
-  "rewrites": [
-    {
-      "source": "/portrait/:path*",
-      "destination": "https://easy-portrait.vercel.app/:path*"
-    },
+  "redirects": [
     {
       "source": "/portrait",
-      "destination": "https://easy-portrait.vercel.app/"
+      "destination": "https://easy-portrait.vercel.app",
+      "permanent": false
+    },
+    {
+      "source": "/portrait/(.*)",
+      "destination": "https://easy-portrait.vercel.app/$1",
+      "permanent": false
     }
   ]
 }
