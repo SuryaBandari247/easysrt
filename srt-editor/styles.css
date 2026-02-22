@@ -23,14 +23,14 @@ body {
 header {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    padding: 30px;
+    padding: 20px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 header h1 {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 700;
     color: white;
 }
@@ -67,7 +67,7 @@ header h1 {
 
 .mode-btn {
     flex: 1;
-    padding: 20px 24px;
+    padding: 14px 24px;
     background: white;
     border: none;
     cursor: pointer;
@@ -93,7 +93,7 @@ header h1 {
 /* Main Content Layout */
 .mode-content {
     display: none;
-    padding: 40px 10%;
+    padding: 30px 10%;
     max-width: 1000px;
     margin: 0 auto;
     background: white;
@@ -104,31 +104,31 @@ header h1 {
 }
 
 .mode-content h2 {
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     color: #1a1a1a;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;
 }
 
 /* Import Area */
 .import-area {
     background: #fafafa;
-    padding: 32px;
+    padding: 24px;
     border-radius: 12px;
     border: 1px solid #e0e0e0;
 }
 
 .import-area textarea {
     width: 100%;
-    height: 350px;
-    padding: 20px;
+    height: 280px;
+    padding: 16px;
     border: 2px solid #e0e0e0;
     border-radius: 10px;
     font-family: 'Courier New', monospace;
     font-size: 14px;
     resize: vertical;
     background: white;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .import-area textarea:focus {
@@ -149,7 +149,7 @@ header h1 {
 
 /* Tools Section - Always visible */
 .tools-section {
-    padding: 40px 10%;
+    padding: 30px 10%;
     background: #f8f9fa;
     border-top: 1px solid #e0e0e0;
     max-width: 1400px;
@@ -157,10 +157,10 @@ header h1 {
 }
 
 .tools-section h2 {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     color: #1a1a1a;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     text-align: center;
 }
 
@@ -168,7 +168,7 @@ header h1 {
     text-align: center;
     color: #6b7280;
     font-size: 13px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     font-style: italic;
 }
 
@@ -347,7 +347,7 @@ header h1 {
 
 .manual-form {
     background: #fafafa;
-    padding: 32px;
+    padding: 24px;
     border-radius: 12px;
     border: 1px solid #e0e0e0;
 }
@@ -517,7 +517,7 @@ header h1 {
 }
 
 .editor-section {
-    padding: 40px 10%;
+    padding: 30px 10%;
     background: #f8f9fa;
     max-width: 1400px;
     margin: 0 auto;
@@ -666,7 +666,7 @@ header h1 {
 /* Pro Banner */
 .pro-banner {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 20px 30px;
+    padding: 12px 30px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -720,7 +720,7 @@ header h1 {
 /* Features Highlight */
 .features-highlight {
     background: white;
-    padding: 20px 30px;
+    padding: 12px 30px;
     display: flex;
     justify-content: center;
     align-items: center;
