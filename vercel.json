@@ -1,12 +1,58 @@
 {
+  "version": 2,
+  "builds": [
+    {
+      "src": "easysrt/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "EasyPortrait/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
   "routes": [
     {
       "src": "/sitemap.xml",
-      "dest": "/sitemap.xml"
+      "dest": "/easysrt/sitemap.xml"
     },
     {
       "src": "/robots.txt",
-      "dest": "/robots.txt"
+      "dest": "/easysrt/robots.txt"
+    },
+    {
+      "src": "/ads.txt",
+      "dest": "/easysrt/ads.txt"
+    },
+    {
+      "src": "/privacy.html",
+      "dest": "/easysrt/privacy.html"
+    },
+    {
+      "src": "/portrait/(.*)",
+      "dest": "/EasyPortrait/dist/$1"
+    },
+    {
+      "src": "/portrait",
+      "dest": "/EasyPortrait/dist/index.html"
+    },
+    {
+      "src": "/srt-editor/(.*)",
+      "dest": "/easysrt/srt-editor/$1"
+    },
+    {
+      "src": "/srt-editor",
+      "dest": "/easysrt/srt-editor/index.html"
+    },
+    {
+      "src": "/(.*\\.(png|jpg|jpeg|gif|svg|css|js|ico))",
+      "dest": "/easysrt/$1"
+    },
+    {
+      "src": "/",
+      "dest": "/easysrt/index.html"
     }
   ]
 }
