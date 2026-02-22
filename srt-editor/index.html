@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="ESpem0gnYY-jZ0BonKggyUUcJS-LT3puUdQKIwRxP84" />
+    
+    <!-- SEO Meta Tags -->
+    <title>Free SRT Editor - Create & Edit Subtitle Files Online | WithSwag</title>
+    <meta name="description" content="Free online SRT subtitle editor. Create, edit, and download SRT files easily. Paste existing subtitles, create manually, or edit existing files. No installation required.">
+    <meta name="keywords" content="srt editor, subtitle editor, srt file creator, subtitle maker, free srt editor, online subtitle editor, create srt file, edit subtitles, srt generator">
+    <meta name="author" content="WithSwag">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://withswag.org/">
+    <meta property="og:title" content="Free SRT Editor - Create & Edit Subtitle Files Online">
+    <meta property="og:description" content="Create and edit SRT subtitle files easily. Paste, create manually, or edit existing files. Free online tool with no installation required.">
+    <meta property="og:image" content="https://withswag.org/og-image.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://withswag.org/">
+    <meta property="twitter:title" content="Free SRT Editor - Create & Edit Subtitle Files Online">
+    <meta property="twitter:description" content="Create and edit SRT subtitle files easily. Paste, create manually, or edit existing files. Free online tool.">
+    <meta property="twitter:image" content="https://withswag.org/og-image.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎬</text></svg>">
+    
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SRT Editor - WithSwag",
+      "description": "Free online SRT subtitle editor for creating and editing subtitle files",
+      "url": "https://withswag.org",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Create SRT files from text",
+        "Edit existing SRT files",
+        "Manual subtitle entry",
+        "Download SRT files",
+        "Free online tool"
+      ]
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎬 WithSwag SRT Editor</h1>
+            <div class="header-actions">
+                <span id="userEmail" class="user-email"></span>
+                <button id="upgradeBtn" class="premium-btn hidden">⭐ Upgrade to Pro</button>
+                <button id="loginBtn" class="premium-btn">Login</button>
+                <button id="logoutBtn" class="premium-btn hidden">Logout</button>
+            </div>
+        </header>
+
+        <!-- Pro Banner -->
+        <div id="proBanner" class="pro-banner">
+            <div class="pro-banner-content">
+                <span class="pro-badge">✨ PRO</span>
+                <p>Upgrade to Pro for unlimited subtitles and advanced features - Only €9.99/month</p>
+                <button id="proBannerBtn" class="pro-banner-btn">Upgrade Now</button>
+            </div>
+        </div>
+
+        <!-- Features Highlight -->
+        <div class="features-highlight">
+            <div class="feature-item">
+                <span class="feature-icon-small">📥</span>
+                <span>Import & Parse SRT</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon-small">✏️</span>
+                <span>Manual Creation</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon-small">📄</span>
+                <span>Format Conversion</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon-small">⏱️</span>
+                <span>Time Adjustment</span>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon-small">💾</span>
+                <span>Download SRT</span>
+            </div>
+        </div>
+
+        <div class="mode-selector">
+            <button class="mode-btn active" data-mode="import">📥 Import Subtitles</button>
+            <button class="mode-btn" data-mode="manual">✏️ Create Manually</button>
+        </div>
+
+        <!-- Mode 1: Import (Paste or Upload) -->
+        <div id="importMode" class="mode-content active">
+            <h2>Import Subtitles</h2>
+            
+            <div class="import-area">
+                <textarea id="pasteInput" placeholder="Paste your SRT content here or upload a file...&#10;&#10;Example:&#10;1&#10;00:00:01,000 --> 00:00:04,000&#10;This is your first line of lyrics.&#10;&#10;2&#10;00:00:04,500 --> 00:00:08,000&#10;This is your second line."></textarea>
+                
+                <div class="import-actions">
+                    <input type="file" id="fileInput" accept=".srt" style="display: none;">
+                    <button id="parseBtn" class="action-btn">📋 Parse & Load</button>
+                    <button id="uploadBtn" class="secondary-btn">📂 Choose File</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mode 2: Manual Entry -->
+        <div id="manualMode" class="mode-content">
+            <h2>Create Subtitles Manually</h2>
+            <div class="manual-form">
+                <div class="auto-increment-control">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="autoIncrement" checked>
+                        <span>Auto-increment timestamps</span>
+                    </label>
+                    <div class="duration-input-group">
+                        <input type="number" id="durationSeconds" value="2" step="0.5" min="0.5" class="duration-input">
+                        <span>seconds per subtitle</span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <input type="text" id="startTime" placeholder="00:00:01,000" class="time-input">
+                    <span>→</span>
+                    <input type="text" id="endTime" placeholder="00:00:03,000" class="time-input">
+                </div>
+                <textarea id="subtitleText" placeholder="Enter subtitle text..."></textarea>
+                <button id="addSlotBtn" class="action-btn">+ Add Subtitle</button>
+            </div>
+        </div>
+
+        <!-- Editor Section -->
+        <div id="editorSection" class="editor-section">
+            <div class="editor-header">
+                <h2>Subtitles (<span id="subtitleCount">0</span>)</h2>
+                <div class="editor-actions">
+                    <button id="clearAllBtn" class="secondary-btn">Clear All</button>
+                    <button id="downloadBtn" class="action-btn">💾 Download SRT</button>
+                </div>
+            </div>
+            <div id="subtitleList" class="subtitle-list"></div>
+        </div>
+
+        <!-- Tools Section (Always visible) -->
+        <div id="toolsSection" class="tools-section">
+            <h2>🔧 Subtitle Tools</h2>
+            <p class="tools-hint" id="toolsHint">Paste, upload, or create subtitles to use these tools</p>
+            <div class="tools-grid">
+                <!-- Format Conversion -->
+                <div class="tool-card">
+                    <div class="tool-icon">📄</div>
+                    <h3>Format Conversion</h3>
+                    <p>Convert to different subtitle formats</p>
+                    <select id="outputFormat" class="format-select" disabled>
+                        <option value="srt">SRT (SubRip)</option>
+                        <option value="vtt">VTT (WebVTT)</option>
+                        <option value="ass">ASS (Advanced SubStation)</option>
+                        <option value="sbv">SBV (YouTube)</option>
+                    </select>
+                    <button id="convertBtn" class="tool-btn" disabled>Convert & Download</button>
+                    <p class="usage-info" id="conversionUsage">Free: 3/day | Pro: Unlimited</p>
+                </div>
+
+                <!-- Time Shift -->
+                <div class="tool-card">
+                    <div class="tool-icon">⏱️</div>
+                    <h3>Time Shift</h3>
+                    <p>Move all subtitles forward or backward</p>
+                    <div class="tool-example">+2.5 moves subtitles 2.5s later</div>
+                    <div class="input-group">
+                        <input type="number" id="shiftSeconds" placeholder="0" step="0.1" class="tool-input" disabled>
+                        <span>seconds</span>
+                    </div>
+                    <button id="shiftBtn" class="tool-btn" disabled>Apply Shift</button>
+                </div>
+
+                <!-- Speed Adjustment -->
+                <div class="tool-card">
+                    <div class="tool-icon">⚡</div>
+                    <h3>Video Speed Adjustment</h3>
+                    <p>Re-time for faster/slower playback</p>
+                    <div class="tool-example">
+                        Video at 2x? Use 0.5x<br>
+                        <span class="example-detail">01:00 → 00:30</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" id="speedMultiplier" placeholder="1.0" step="0.1" min="0.5" max="2.0" class="tool-input" disabled>
+                        <span>× speed</span>
+                    </div>
+                    <button id="speedBtn" class="tool-btn" disabled>Apply Speed</button>
+                    <p class="usage-info" id="syncUsage">Free: 5/day | Pro: Unlimited</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEO Content Section -->
+        <div class="seo-content">
+            <h2>Free Online SRT Subtitle Editor</h2>
+            <p>Create and edit SRT subtitle files quickly and easily with WithSwag's free online tool. Whether you're working on video subtitles, captions for YouTube, or creating subtitles for movies, our SRT editor makes the process simple.</p>
+            
+            <h3>Three Easy Ways to Create Subtitles</h3>
+            <ul>
+                <li><strong>Paste & Parse:</strong> Already have subtitle text? Just paste it and we'll format it into a proper SRT file.</li>
+                <li><strong>Manual Entry:</strong> Create subtitles from scratch by adding timestamps and text one by one.</li>
+                <li><strong>Edit Existing Files:</strong> Upload your .srt file and make quick edits to timing or text.</li>
+            </ul>
+            
+            <h3>Why Use Our SRT Editor?</h3>
+            <ul>
+                <li>✓ No installation required - works in your browser</li>
+                <li>✓ Free to use with no signup</li>
+                <li>✓ Edit and download unlimited SRT files</li>
+                <li>✓ Simple, intuitive interface</li>
+                <li>✓ Works on desktop and mobile</li>
+            </ul>
+            
+            <div class="pro-features-section">
+                <h3>🌟 Pro Features Available</h3>
+                <div class="pro-features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">∞</div>
+                        <h4>Unlimited Subtitles</h4>
+                        <p>Create as many subtitle entries as you need without any limits</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📄</div>
+                        <h4>Unlimited Conversions</h4>
+                        <p>Convert to any format unlimited times per day</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h4>Unlimited Time Tools</h4>
+                        <p>Use shift and speed adjustment without daily limits</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💾</div>
+                        <h4>Cloud Save</h4>
+                        <p>Your subtitles sync across all your devices</p>
+                    </div>
+                </div>
+                <div class="pro-cta">
+                    <button id="proCtaBtn" class="action-btn">Upgrade to Pro - €9.99/month</button>
+                </div>
+            </div>
+            
+            <p>Perfect for content creators, video editors, filmmakers, and anyone who needs to create or edit subtitle files quickly.</p>
+        </div>
+
+        <!-- Free Tier Limit Notice -->
+        <div id="limitNotice" class="limit-notice hidden">
+            <p>⚠️ Free tier limited to 10 subtitles. <a href="#" id="upgradeLinkLimit">Upgrade to Pro</a> for unlimited subtitles!</p>
+        </div>
+    </div>
+
+    <!-- Premium Modal -->
+    <div id="premiumModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🌟 Upgrade to SRT Editor Pro</h2>
+            <div class="pricing">
+                <div class="price-card">
+                    <h3>Free</h3>
+                    <p class="price">$0</p>
+                    <ul>
+                        <li>✓ Up to 10 subtitles</li>
+                        <li>✓ Basic editing</li>
+                        <li>✗ Batch operations</li>
+                        <li>✗ Auto-sync</li>
+                    </ul>
+                </div>
+                <div class="price-card featured">
+                    <h3>Pro</h3>
+                    <p class="price">$9.99<span>/month</span></p>
+                    <ul>
+                        <li>✓ Unlimited subtitles</li>
+                        <li>✓ Advanced editing</li>
+                        <li>✓ Batch operations</li>
+                        <li>✓ Auto-sync tools</li>
+                        <li>✓ Priority support</li>
+                    </ul>
+                    <div id="paypal-button-container-P-8GK70325NY114614SNGNCH2Y"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal hidden">
+        <div class="modal-content auth-modal">
+            <span class="close-auth">&times;</span>
+            <h2 id="authTitle">Login to SRT Editor Pro</h2>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Login</button>
+                <button class="auth-tab" data-tab="signup">Sign Up</button>
+            </div>
+            <form id="authForm">
+                <input type="email" id="authEmail" placeholder="Email" required>
+                <input type="password" id="authPassword" placeholder="Password (min 6 characters)" required>
+                <div id="authError" class="auth-error hidden"></div>
+                <button type="submit" id="authSubmit" class="action-btn">Login</button>
+            </form>
+            <p class="auth-note">Create an account to unlock Pro features and save your work</p>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">
+        <span id="toastMessage"></span>
+    </div>
+
+    <!-- Confirm Dialog -->
+    <div id="confirmDialog" class="modal hidden">
+        <div class="modal-content confirm-dialog">
+            <h3 id="confirmTitle">Confirm Action</h3>
+            <p id="confirmMessage"></p>
+            <div class="confirm-actions">
+                <button id="confirmCancel" class="secondary-btn">Cancel</button>
+                <button id="confirmOk" class="action-btn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Subtitle Dialog -->
+    <div id="editDialog" class="modal hidden">
+        <div class="modal-content edit-dialog">
+            <span class="close-edit">&times;</span>
+            <h3>Edit Subtitle</h3>
+            <div class="edit-form">
+                <label>Start Time</label>
+                <input type="text" id="editStartTime" placeholder="00:00:01,000">
+                <label>End Time</label>
+                <input type="text" id="editEndTime" placeholder="00:00:04,000">
+                <label>Text</label>
+                <textarea id="editText" rows="3"></textarea>
+                <div class="edit-actions">
+                    <button id="editCancel" class="secondary-btn">Cancel</button>
+                    <button id="editSave" class="action-btn">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AVOQ7jzJkMtSk0ttbX7Uhk9QZI5y4K_U66cdB2jwn_5eCs0O9LpQF-N5TxqB8lwQw-6hXLGPw_rzTAQn&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+    <script>
+    paypal.Buttons({
+        style: {
+            shape: 'rect',
+            color: 'blue',
+            layout: 'vertical',
+            label: 'subscribe'
+        },
+        createSubscription: function(data, actions) {
+            return actions.subscription.create({
+                plan_id: 'P-8GK70325NY114614SNGNCH2Y'
+            });
+        },
+        onApprove: function(data, actions) {
+            window.paypalOnApprove(data);
+        }
+    }).render('#paypal-button-container-P-8GK70325NY114614SNGNCH2Y');
+    </script>
+
+    <script src="app.js" type="module"></script>
+</body>
+</html>
